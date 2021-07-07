@@ -11,17 +11,23 @@ class SocialNetworksController extends Controller
         return view('Admin.social_networks', ['social_networks' => SocialNetwork::all()]);
     }
 
-    public function add_pilot(Request $request){
+    public function add(){
+        return view('Admin.social_networks_add');
+    }
+
+    public function save_new(Request $request){
 //        if (Auth::check()) {
         if ($request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
+                    'link' => 'required | url',
                 ]
             );
-            $pilot = new Pilot();
-            $pilot->name = $request->input('name');
-            $pilot->save();
+            $social_network = new SocialNetwork();
+            $social_network->name = $request->input('name');
+            $social_network->link = $request->input('link');
+            $social_network->save();
 
             // Post adding logging
 //                $log = new Logger('new');
@@ -29,41 +35,47 @@ class SocialNetworksController extends Controller
 //                $log->info('Пользователь ' . Auth::user()->name . ' добавил пост № ' . $post->id);
 //                $log->info('Пост "' . $post->title . '" был добавлен пользователем с адресом: ' . Auth::user()->email);
 
-            \Session::flash('flash', 'Пилот ' . $pilot->name . ' успешно добавлен.');
-
-            return back();
+            \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' успешно добавлена.');
+            return redirect()->route('social_networks');
         }
 //        } else {
 //            return redirect()->route('index');
 //        }
     }
 
-    public function delete(Request $request){
-//        if (Auth::check()) {
-        if ($request->method() == 'DELETE') {
-            $pilot = Pilot::find($request->input('id'));
-            $pilot->delete();
-            \Session::flash('flash', 'Пилот ' . $pilot->name . ' больше никуда не едет.');
-
-            return back();
-        }
-//        } else {
-//            return redirect()->route('404');
-//        }
+    public function edit($id){
+        $social_network = SocialNetwork::where('id', '=', $id)->first();
+        return view('Admin.social_network_edit', ['social_network' => $social_network]);
     }
 
-    public function edit_pilot(Request $request){
+    public function save_edit(Request $request){
 //        if (Auth::check()) {
         if ($request->method() == 'POST') {
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
+                    'link' => 'required | url',
                 ]
             );
-            $pilot = Pilot::where('id', '=', $request->input('id'))->first();
-            $pilot->name = $request->input('name');
-            $pilot->save();
+            $social_network = SocialNetwork::where('id', '=', $request->input('id'))->first();
+            $social_network->name = $request->input('name');
+            $social_network->link = $request->input('link');
+            $social_network->save();
 
-            \Session::flash('flash', 'Имя пилота # ' . $pilot->id . ' успешно изменено на '. $pilot->name . '.');
+            \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' успешно изменена.');
+
+            return redirect()->route('social_networks');
+        }
+//        } else {
+//            return redirect()->route('404');
+//        }
+    }
+
+    public function delete(Request $request){
+//        if (Auth::check()) {
+        if ($request->method() == 'DELETE') {
+            $social_network = SocialNetwork::find($request->input('id'));
+            $social_network->delete();
+            \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' удалена.');
 
             return back();
         }
@@ -71,4 +83,6 @@ class SocialNetworksController extends Controller
 //            return redirect()->route('404');
 //        }
     }
+
+
 }

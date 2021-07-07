@@ -39,16 +39,7 @@
                     </div>
                 @endforeach
             @endif
-            <form method="post" action="{{route('add_pilot')}}">
-                @csrf
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" style="color: gold" id="inputGroup-sizing-default">Пилот:</span>
-                    </div>
-                    <input type="text" name="name" class="form-control" aria-label="name" aria-describedby="inputGroup-sizing-default">
-                </div>
-                <input type="submit" class="btn btn-warning" value="+ Добавить">
-            </form>
+                <a class="btn btn-warning" href="{{route('social_network_add')}}" role="button">+ Добавить</a>
             <hr>
             <div class="row">
                 <!-- START CONTENT -->
@@ -68,14 +59,10 @@
                                 <th scope="row">{{$social_network->name}}</th>
                                 <td>{{$social_network->link}}</td>
                                 <td>
-                                    <form action="{{route('delete_pilot')}}" method="post">
-                                        @csrf
-                                        <input type="hidden" name="id" value="{{$social_network->id}}">
-                                        <button type="submit" class="btn btn-ultraviolet-rays-1">Редактировать</button>
-                                    </form>
+                                    <a class="btn btn-ultraviolet-rays-1" href="{{route('social_network_edit', $social_network->id)}}" role="button">Редактировать</a>
                                 </td>
                                 <td>
-                                    <form action="{{route('delete_pilot')}}" method="post">
+                                    <form action="{{route('social_network_delete')}}" method="post">
                                         @csrf
                                         {{method_field('delete')}}
                                         <input type="hidden" name="id" value="{{$social_network->id}}">

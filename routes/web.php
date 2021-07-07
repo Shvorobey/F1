@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'PagesController@index')->name('index');
 Route::get('/rules/{key}', 'PagesController@rule')->name('rule');
+Route::get('/posts', 'PagesController@posts')->name('posts');
+Route::get('/post/{id}', 'PagesController@single_post')->name('single_post');
+Route::post('/post/add_comment', 'PagesController@add_comment')->name('add_comment');
+
 
 //////////// ADMIN PANEL ////////////
 // PILOTS
@@ -25,9 +29,14 @@ Route::post('/F1_admin/edit_pilot', 'PilotsController@edit_pilot')->name('edit_p
 Route::delete('/F1_admin/pilots', 'PilotsController@delete')->name('delete_pilot');
 // SOCIAL NETWORKS
 Route::get('/F1_admin/social_networks', 'SocialNetworksController@social_networks')->name('social_networks');
-//Route::get('/F1_admin/social_networks', 'SocialNetworksController@pilots')->name('social_network');
-//Route::post('/F1_admin/social_networks', 'SocialNetworksController@add_pilot')->name('add_pilot');
-//Route::post('/F1_admin/social_networks', 'SocialNetworksController@edit_pilot')->name('edit_pilot');
-//Route::delete('/F1_admin/social_networks', 'SocialNetworksController@delete')->name('delete_pilot');
+Route::get('/F1_admin/social_networks/add', 'SocialNetworksController@add')->name('social_network_add');
+Route::post('/F1_admin/social_networks/add', 'SocialNetworksController@save_new')->name('social_network_save_new');
+Route::get('/F1_admin/social_networks/edit/{id}', 'SocialNetworksController@edit')->name('social_network_edit');
+Route::post('/F1_admin/social_networks/edit_save', 'SocialNetworksController@save_edit')->name('social_network_save_edit');
+Route::delete('/F1_admin/social_networks/delete', 'SocialNetworksController@delete')->name('social_network_delete');
 
 Route::get('/404', function (){return view('Pages.404');})->name('404');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -61,6 +61,7 @@
     <link rel='stylesheet' id='responsive-css' href='/css/responsive.css' type='text/css' media='all'/>
     <link rel='stylesheet' id='polaroid-slider-css' href='/sliders/polaroid/css/polaroid.css' type='text/css'
           media='all'/>
+    <link rel='stylesheet' id='blog-libra-big-css'  href='blog/libra-small/css/style.css' type='text/css' media='all' />
     <link rel='stylesheet' id='ahortcodes-css' href='/css/shortcodes.css' type='text/css' media='all'/>
     <link rel='stylesheet' id='contact-form-css' href='/css/contact_form.css' type='text/css' media='all'/>
     <link rel='stylesheet' id='custom-css' href='/css/custom.css' type='text/css' media='all'/>
@@ -140,6 +141,11 @@
                                 <ul class="sub-menu">
                                     <li><a href="{{route('pilots')}}">Пилоты</a></li>
                                     <li><a href="{{route('social_networks')}}">Соц. сети</a></li>
+                                </ul>
+                            </li>                            <li>
+                                <a href="{{route('posts')}}">БЛОГ</a>
+                                <ul class="sub-menu">
+                                    <li><a href="{{route('posts')}}">Блог</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -423,7 +429,34 @@
     <script type='text/javascript' src='/js/jquery.cycle.min.js'></script>
     <script type='text/javascript' src='/js/shortcodes.js'></script>
     <script type='text/javascript' src='/js/jquery.custom.js'></script>
-
+    <script type='text/javascript' src='/js/hoverIntent.min.js'></script>
+    <script type='text/javascript' src='/js/media-upload.min.js'></script>
+    <script type='text/javascript' src='/js/jquery.clickout.min.js'></script>
+    <script type='text/javascript' src='/js/responsive.js'></script>
+    <script type='text/javascript' src='/js/mobilemenu.js'></script>
+    <script type='text/javascript' src='/js/jquery.superfish.js'></script>
+    <script type='text/javascript' src='/js/jquery.colorbox-min.js'></script>
+    <script type='text/javascript' src='/js/jquery.placeholder.js'></script>
+    <script type='text/javascript' src='/js/contact.js'></script>
+    <script type='text/javascript' src='/js/jquery.tweetable.js'></script>
+    <script type='text/javascript' src='js/comment-reply.min.js'></script>
+    <script type='text/javascript' src='js/underscore.min.js'></script>
+    <script type='text/javascript' src='js/jquery/jquery.masonry.min.js'></script>
+    <script type='text/javascript' src='js/jquery.easing.js'></script>
+    <script type='text/javascript' src='js/hoverIntent.min.js'></script>
+    <script type='text/javascript' src='js/media-upload.min.js'></script>
+    <script type='text/javascript' src='js/jquery.clickout.min.js'></script>
+    <script type='text/javascript' src='js/responsive.js'></script>
+    <script type='text/javascript' src='js/mobilemenu.js'></script>
+    <script type='text/javascript' src='js/jquery.superfish.js'></script>
+    <script type='text/javascript' src='js/jquery.colorbox-min.js'></script>
+    <script type='text/javascript' src='js/jquery.placeholder.js'></script>
+    <script type='text/javascript' src='js/contact.js'></script>
+    <script type='text/javascript' src='js/jquery.tweetable.js'></script>
+    <script type='text/javascript' src='js/jquery.tipsy.js'></script>
+    <script type='text/javascript' src='js/jquery.cycle.min.js'></script>
+    <script type='text/javascript' src='js/shortcodes.js'></script>
+    <script type='text/javascript' src='js/jquery.custom.js'></script>
 </body>
 <!-- END BODY -->
 </html>
