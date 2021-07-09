@@ -13,7 +13,7 @@
                     <!-- TITLE -->
                     <div class="title">
                         <div class="icontitle">
-                            <img src="/images/pages/social_networks.png" alt="title"/>
+                            <img src="/images/my/social_networks.png" alt="title"/>
                         </div>
                         <div class="title-with-icon">
                             <h1>Редактировать социальную сеть</h1>
@@ -37,7 +37,7 @@
             @endif
             <div class="row">
                 <!-- START CONTENT -->
-                <div id="content-page" class="span12 content group">
+                <div style="text-align: center;" id="content-page" class="span12 content group">
                     <form action="{{route('social_network_save_edit')}}" method="post">
                         @csrf
                         <div class="form-group">

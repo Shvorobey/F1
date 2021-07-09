@@ -55,9 +55,10 @@
                         <div id="comments">
                             <div id="respond">
 
-{{--                        @if(Auth::check())--}}
-{{--                            <hr>--}}
-{{--                            @if(count($comments) == 0)<p>Коментариев пока нет.</p>@endif--}}
+                        @if(\Illuminate\Support\Facades\Auth::check())
+                            <hr>
+                            @if(count($post->comments) == 0)<p>Коментариев пока нет.</p>
+                                    @else
                                 <h3 id="reply-title"><span>Коментарии:</span></h3>
                             @foreach($post->comments as $comment)
                                             <p class="comments">
@@ -67,22 +68,21 @@
                                 <hr>
                                             </p>
                             @endforeach
-
-{{--                            @if(Auth::user()->role == 2)--}}
+                                @endif
                                 <h3 id="reply-title">Добавить <span>коментарий</span></h3>
                                 <form action="{{route('add_comment')}}" method="post">
                                     @csrf
                                     <input type="hidden" name="post_id" value="{{$post->id}}">
-                                    <input type="hidden" name="author" value="Vasya">
-{{--                                    <input type="hidden" name="author" value="{{Auth::user()->name}}">--}}
+                                    <input type="hidden" name="author" value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
                                     <textarea class="form-control" name="comment" ></textarea>
                                     <br>
                                     <button class="btn btn-outline-primary">Добавить комментарий</button>
                                 </form>
-{{--                            @endif--}}
-{{--                        @else--}}
-{{--                            <p>Войдите чтобы иметь возможность видеть комментарии и комментировать</p>--}}
-{{--                    @endif--}}
+                        @else
+                            <p>
+                               <strong style="color: red"> Войдите чтобы иметь возможность видеть комментарии и комментировать</strong>
+                            </p>
+                    @endif
                         <!-- START COMMENTS -->
 
                             </div>

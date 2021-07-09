@@ -12,7 +12,7 @@
                     <!-- TITLE -->
                     <div class="title">
                         <div class="icontitle">
-                            <img src="/images/pages/social_networks.png" alt="title"/>
+                            <img src="/images/my/social_networks.png" alt="title"/>
                         </div>
                         <div class="title-with-icon">
                             <h1>Мы в социальных сетях</h1>

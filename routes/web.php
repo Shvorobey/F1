@@ -13,12 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// PAGES
 Route::get('/', 'PagesController@index')->name('index');
 Route::get('/rules/{key}', 'PagesController@rule')->name('rule');
 Route::get('/posts', 'PagesController@posts')->name('posts');
 Route::get('/post/{id}', 'PagesController@single_post')->name('single_post');
 Route::post('/post/add_comment', 'PagesController@add_comment')->name('add_comment');
-
 
 //////////// ADMIN PANEL ////////////
 // PILOTS

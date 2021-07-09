@@ -8,6 +8,7 @@ use App\Post;
 use App\Rule;
 use App\SocialNetwork;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PagesController extends Controller
 {
@@ -39,7 +40,7 @@ class PagesController extends Controller
     }
 
     public function add_comment(Request $request){
-//        if (Auth::check()){
+        if (Auth::check()){
             if ($request->method() == 'POST'){
                 $this->validate($request, [
                         'author' => 'required | max:50 | min: 3',
@@ -54,7 +55,7 @@ class PagesController extends Controller
 
                 return back();
             }
-//        }
+        }
     }
 
     public function rule($key)
