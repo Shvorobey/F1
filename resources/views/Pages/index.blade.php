@@ -95,49 +95,19 @@
                     <!-- START CONTENT -->
                     <div id="content-home" class="span12 content group">
                         <div class="page type-page status-publish hentry group">
+                            @inject('competitions', '\App\Competition')
+                            @foreach($competitions->getCompetition() as $competition)
                             <div class="box-sections numbers-sections margin-bottom ">
                                 <div class="number number-left number-zero"></div>
-                                <div class="number number-right number-1"></div>
+                                <div class="number number-right number-{{$loop->index + 1}}"></div>
                                 <h4>
-                                    Marketing <span class="title-highlight">solutions</span>
+                                    {{$competition->name}}
                                 </h4>
                                 <p>
-                                    Quisque nec mi eu nibh aliquam elementum. Ut cursus nisl sit amet sapien dignissim at adipiscing lectus ornare lorem lorem dieus.
+                                    {{$competition->description}}
                                 </p>
                             </div>
-
-                            <div class="box-sections numbers-sections margin-bottom ">
-                                <div class="number number-left number-zero"></div>
-                                <div class="number number-right number-2"></div>
-                                <h4>
-                                    Brand <span class="title-highlight">identity</span>
-                                </h4>
-                                <p>
-                                    Quisque nec mi eu nibh aliquam elementum. Ut cursus nisl sit amet sapien dignissim at adipiscing lectus ornare lorem lorem dieus.
-                                </p>
-                            </div>
-
-                            <div class="box-sections numbers-sections margin-bottom ">
-                                <div class="number number-left number-zero"></div>
-                                <div class="number number-right number-3"></div>
-                                <h4>
-                                    Web <span class="title-highlight">design</span>
-                                </h4>
-                                <p>
-                                    Quisque nec mi eu nibh aliquam elementum. Ut cursus nisl sit amet sapien dignissim at adipiscing lectus ornare lorem lorem dieus.
-                                </p>
-                            </div>
-
-                            <div class="box-sections numbers-sections margin-bottom  last">
-                                <div class="number number-left number-zero"></div>
-                                <div class="number number-right number-4"></div>
-                                <h4>
-                                    Another <span class="title-highlight">service!</span>
-                                </h4>
-                                <p>
-                                    Quisque nec mi eu nibh aliquam elementum. Ut cursus nisl sit amet sapien dignissim at adipiscing lectus ornare lorem lorem dieus.
-                                </p>
-                            </div>
+                            @endforeach
                             <div class="clear"></div>
                             <div class="row">
                                 <!-- START SECTION BLOG -->
@@ -197,7 +167,6 @@
                                                             Nice &amp; Clean. The best for your blog!
                                                         </a>
                                                     </h4>
-                                                    <p class="author">by <strong>Nicola Mustone</strong></p>
                                                     <p class="comments">
                                                         <a href="blog-detail.html#respond" title="Comment on Nice &amp; Clean. The best for your blog!">
                                                             <strong>Comments:</strong> 0
@@ -222,7 +191,6 @@
                                                             Another theme by YIThemes!
                                                         </a>
                                                     </h4>
-                                                    <p class="author">by <strong>Nicola Mustone</strong></p>
                                                     <p class="comments">
                                                         <a href="##respond" title="Comment on Another theme by YIThemes!">
                                                             <strong>Comments:</strong> 0
@@ -247,7 +215,6 @@
                                                             Oscar Wilde
                                                         </a>
                                                     </h4>
-                                                    <p class="author">by <strong>Nicola Mustone</strong></p>
                                                     <p class="comments">
                                                         <a href="#respond" title="Comment on Oscar Wilde">
                                                             <strong>Comments:</strong> 0
@@ -272,7 +239,6 @@
                                                             This is the title of the first article. Enjoy it.
                                                         </a>
                                                     </h4>
-                                                    <p class="author">by <strong>Nicola Mustone</strong></p>
                                                     <p class="comments">
                                                         <a href="##comments" title="Comment on This is the title of the first article. Enjoy it.">
                                                             <strong>Comments:</strong> 1

@@ -32,20 +32,21 @@
                     {{\Session::get('flash')}}
                 </div>
             @endif
-                @if ($errors->any())
-                    @foreach ($errors->all() as $error)
+            @if ($errors->any())
+                @foreach ($errors->all() as $error)
                     <div class="box error-box">
-                       {{ $error }}
+                        {{ $error }}
                     </div>
-                    @endforeach
-                @endif
-            <form method="post" action="{{route('add_pilot')}}">
+                @endforeach
+            @endif
+            <form method="post" action="{{route('pilot_add')}}">
                 @csrf
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" style="color: gold" id="inputGroup-sizing-default">Пилот:</span>
                     </div>
-                    <input type="text" name="name" class="form-control" aria-label="name" aria-describedby="inputGroup-sizing-default">
+                    <input type="text" name="name" class="form-control" aria-label="name"
+                           aria-describedby="inputGroup-sizing-default" value="{{old('name')}}">
                 </div>
                 <input type="submit" class="btn btn-warning" value="+ Добавить">
             </form>
@@ -58,35 +59,35 @@
                         <tr>
                             <th scope="col">ИД</th>
                             <th scope="col">Пилот</th>
-                            <th scope="col"></th>
+                            <th scope="col">Новое имя</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($pilots as $pilot)
-                        <tr>
-                            <th scope="row">{{$pilot->id}}</th>
-                            <td>{{$pilot->name}}</td>
-                            <form action="{{route('edit_pilot')}}" method="post">
-                            <td>
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{$pilot->id}}">
-                                    <input type="text" name="name">
-                            </td>
-                                <td>
-                                    <button type="submit" class="btn btn-ultraviolet-rays-1 ">Сохранить</button>
-                                </td>
-                            </form>
-                            <td>
-                                <form action="{{route('delete_pilot')}}" method="post">
-                                    @csrf
-                                    {{method_field('delete')}}
-                                    <input type="hidden" name="id" value="{{$pilot->id}}">
-                                    <button type="submit" class="btn btn-hem-5 ">Удалить</button>
+                            <tr>
+                                <th scope="row">{{$pilot->id}}</th>
+                                <td>{{$pilot->name}}</td>
+                                <form action="{{route('pilot_edit')}}" method="post">
+                                    <td>
+                                        @csrf
+                                        <input type="hidden" name="id" value="{{$pilot->id}}">
+                                        <input type="text" name="name">
+                                    </td>
+                                    <td>
+                                        <button type="submit" class="btn btn-ultraviolet-rays-1 ">Сохранить</button>
+                                    </td>
                                 </form>
-                            </td>
-                        </tr>
+                                <td>
+                                    <form action="{{route('pilot_delete')}}" method="post">
+                                        @csrf
+                                        {{method_field('delete')}}
+                                        <input type="hidden" name="id" value="{{$pilot->id}}">
+                                        <button type="submit" class="btn btn-hem-5 ">Удалить</button>
+                                    </form>
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>

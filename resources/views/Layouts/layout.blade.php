@@ -112,23 +112,43 @@
                                 </ul>
                             </li>
                             <li>
-                                <a href="#">АДМИНКА</a>
-                                <ul class="sub-menu">
-                                    <li><a href="{{route('pilots')}}">Пилоты</a></li>
-                                    <li><a href="{{route('social_networks')}}">Соц. сети</a></li>
-                                </ul>
-                            </li>
-                            <li>
                                 <a href="{{route('posts')}}">БЛОГ</a>
                                 <ul class="sub-menu">
                                     <li><a href="{{route('posts')}}">Блог</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="#">ПРОГНОЗЫ</a>
+                                <ul class="sub-menu">
+                                    @foreach($competitions->getCompetition() as $competition)
+                                        <li>
+                                            <a href="/competition/{{$competition->key}}">{{$competition->name}}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                            @if(\Illuminate\Support\Facades\Auth::check())
+                            <li>
+                                <a href="#">АДМИНКА</a>
+                                <ul class="sub-menu">
+                                    <li><a href="{{route('pilots')}}">Пилоты</a></li>
+                                    <li><a href="{{route('social_networks')}}">Соц. сети</a></li>
+                                    <li><a href="{{route('posts_all')}}">Блог</a></li>
+                                    <li><a href="{{route('races')}}">Гонки</a></li>
+                                    <li><a href="{{route('users')}}">Пользователи</a></li>
+                                </ul>
+                            </li>
+                            @endif
                             <div id="topbar_login" class="not_logged_in">
                                 <li>
-                                    <a class="nav-link" style="color: gold"
-                                       href="{{route('home')}}">@if(\Illuminate\Support\Facades\Auth::check())<strong>{{\Illuminate\Support\Facades\Auth::user()->name}}</strong>
-                                        @else Вход / Регистрация @endif</a>
+                                        @if(\Illuminate\Support\Facades\Auth::check())
+                                            <a class="nav-link" style="color: gold"
+                                               href="{{route('user_cabinet', Auth::user()->id)}}">
+                                            <strong>{{\Illuminate\Support\Facades\Auth::user()->name}}</strong>
+                                        @else
+                                                    <a class="nav-link" style="color: gold"
+                                                       href="{{route('home')}}">
+                                                    Вход / Регистрация @endif</a>
                                 </li>
                                 @if(\Illuminate\Support\Facades\Auth::check())
                                 <li>

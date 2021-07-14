@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Pilot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PilotsController extends Controller
 {
-    public function pilots(){
+    public function pilots()
+    {
         return view('Admin.pilots', ['pilots' => Pilot::all()]);
     }
 
-    public function add_pilot(Request $request){
-//        if (Auth::check()) {
+    public function pilot_add(Request $request)
+    {
+        if (Auth::check() && Auth::user()->role == 1) {
             if ($request->method() == 'POST') {
                 // Post validation
                 $this->validate($request, [
@@ -33,28 +36,25 @@ class PilotsController extends Controller
 
                 return back();
             }
-//        } else {
-//            return redirect()->route('index');
-//        }
+        }
+        return abort(404);
     }
 
-    public function delete(Request $request){
-//        if (Auth::check()) {
-            if ($request->method() == 'DELETE') {
+    public function delete(Request $request)
+    {
+        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'DELETE') {
                 $pilot = Pilot::find($request->input('id'));
                 $pilot->delete();
                 \Session::flash('flash', 'Пилот ' . $pilot->name . ' больше никуда не едет.');
 
                 return back();
             }
-//        } else {
-//            return redirect()->route('404');
-//        }
+        return abort(404);
     }
 
-    public function edit_pilot(Request $request){
-//        if (Auth::check()) {
-            if ($request->method() == 'POST') {
+    public function pilot_edit(Request $request)
+    {
+        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'POST') {
                 $this->validate($request, [
                         'name' => 'required | max:50 | min: 3',
                     ]
@@ -63,12 +63,10 @@ class PilotsController extends Controller
                 $pilot->name = $request->input('name');
                 $pilot->save();
 
-                \Session::flash('flash', 'Имя пилота # ' . $pilot->id . ' успешно изменено на '. $pilot->name . '.');
+                \Session::flash('flash', 'Имя пилота # ' . $pilot->id . ' успешно изменено на ' . $pilot->name . '.');
 
                 return back();
             }
-//        } else {
-//            return redirect()->route('404');
-//        }
+        return abort(404);
     }
 }

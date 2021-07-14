@@ -39,11 +39,23 @@
                     </div>
                 @endforeach
             @endif
-                <a class="btn btn-warning" href="{{route('social_network_add')}}" role="button">+ Добавить</a>
+                <form method="post" action="{{route('social_network_add')}}">
+                    @csrf
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: gold" id="inputGroup-sizing-default">Название:</span>
+                            <input type="text" name="name" class="form-control" aria-label="name"
+                                   aria-describedby="inputGroup-sizing-default" value="{{old('name')}}">
+                            <span class="input-group-text" style="color: gold" id="inputGroup-sizing-default"> Ссылка:</span>
+                            <input type="text" name="link" class="span8" value="{{old('link')}}">
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-warning" value="+ Добавить">
+                </form>
             <hr>
             <div class="row">
                 <!-- START CONTENT -->
-                <div id="content-page" class="span9 content group">
+                <div id="content-page" class="span12 content group">
                     <table class="table table-striped">
                         <thead>
                         <tr>
@@ -57,9 +69,12 @@
                         @foreach($social_networks as $social_network)
                             <tr>
                                 <th scope="row">{{$social_network->name}}</th>
-                                <td>{{$social_network->link}}</td>
                                 <td>
-                                    <a class="btn btn-ultraviolet-rays-1" href="{{route('social_network_edit', $social_network->id)}}" role="button">Редактировать</a>
+                                    <a href="{{$social_network->link}}">{{$social_network->link}}</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-ultraviolet-rays-1"
+                                       href="{{route('social_network_edit', $social_network->id)}}" role="button">Редактировать</a>
                                 </td>
                                 <td>
                                     <form action="{{route('social_network_delete')}}" method="post">

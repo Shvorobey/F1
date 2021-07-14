@@ -7,6 +7,7 @@ use App\Competition;
 use App\Post;
 use App\Rule;
 use App\SocialNetwork;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,13 +15,13 @@ class PagesController extends Controller
 {
     public function index()
     {
-        return view('Pages.index');
+        return view('Pages.index', ['i' => 1]);
     }
 
     public function posts()
     {
         return view('Pages.blog', [
-            'posts' =>  Post::orderBy('id', 'DESC')->paginate(5),
+            'posts' => Post::orderBy('id', 'DESC')->paginate(5),
             'best_posts' => Post::orderBy('views', 'DESC')->limit(3)->get(),
             'social_networks' => SocialNetwork::all()
         ]);
@@ -29,19 +30,20 @@ class PagesController extends Controller
     public function single_post($id)
     {
         $post = Post::where('id', '=', $id)->first();
-        $post->views +=1;
+        $post->views += 1;
         $post->save();
 
         return view('Pages.single_post', [
             'post' => $post,
             'best_posts' => Post::orderBy('views', 'DESC')->limit(3)->get(),
             'social_networks' => SocialNetwork::all()
-            ]);
+        ]);
     }
 
-    public function add_comment(Request $request){
-        if (Auth::check()){
-            if ($request->method() == 'POST'){
+    public function add_comment(Request $request)
+    {
+        if (Auth::check()) {
+            if ($request->method() == 'POST') {
                 $this->validate($request, [
                         'author' => 'required | max:50 | min: 3',
                         'comment' => 'required | max:1000 | min: 2',
@@ -69,5 +71,17 @@ class PagesController extends Controller
             'competition' => $competition,
             'rules' => $rules
         ]);
+    }
+
+    public function user_cabinet($id)
+    {
+
+        if (Auth::check() && Auth::user()->id == $id) {
+
+            return view('Pages.user_cabinet', [
+                'user' => User::find($id)
+            ]);
+        }
+        return abort(404);
     }
 }

@@ -3,21 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\SocialNetwork;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SocialNetworksController extends Controller
 {
-    public function social_networks(){
-        return view('Admin.social_networks', ['social_networks' => SocialNetwork::all()]);
+    public function social_networks()
+    {
+        if (Auth::check() && Auth::user()->role == 1) {
+
+            return view('Admin.social_networks', ['social_networks' => SocialNetwork::all()]);
+        }
+        return abort(404);
     }
 
-    public function add(){
-        return view('Admin.social_networks_add');
-    }
-
-    public function save_new(Request $request){
-//        if (Auth::check()) {
-        if ($request->method() == 'POST') {
+    public function add(Request $request)
+    {
+        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
@@ -36,21 +39,28 @@ class SocialNetworksController extends Controller
 //                $log->info('Пост "' . $post->title . '" был добавлен пользователем с адресом: ' . Auth::user()->email);
 
             \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' успешно добавлена.');
-            return redirect()->route('social_networks');
+
+            return back();
         }
-//        } else {
-//            return redirect()->route('index');
-//        }
+        return abort(404);
     }
 
-    public function edit($id){
-        $social_network = SocialNetwork::where('id', '=', $id)->first();
-        return view('Admin.social_network_edit', ['social_network' => $social_network]);
+    public function edit($id)
+    {
+        if (Auth::check() && Auth::user()->role == 1) {
+
+            return view('Admin.social_network_edit', [
+                    'social_network' =>
+                        SocialNetwork::where('id', '=', $id)->first()
+                ]
+            );
+        }
+        return abort(404);
     }
 
-    public function save_edit(Request $request){
-//        if (Auth::check()) {
-        if ($request->method() == 'POST') {
+    public function save_edit(Request $request)
+    {
+        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'POST') {
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
                     'link' => 'required | url',
@@ -65,24 +75,18 @@ class SocialNetworksController extends Controller
 
             return redirect()->route('social_networks');
         }
-//        } else {
-//            return redirect()->route('404');
-//        }
+        return abort(404);
     }
 
-    public function delete(Request $request){
-//        if (Auth::check()) {
-        if ($request->method() == 'DELETE') {
+    public function delete(Request $request)
+    {
+        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'DELETE') {
             $social_network = SocialNetwork::find($request->input('id'));
             $social_network->delete();
             \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' удалена.');
 
             return back();
         }
-//        } else {
-//            return redirect()->route('404');
-//        }
+        return abort(404);
     }
-
-
 }

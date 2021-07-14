@@ -17,6 +17,7 @@ class CreateCompetitionsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('key')->unique();
+            $table->text('description');
             $table->timestamps();
         });
     }

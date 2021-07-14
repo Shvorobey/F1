@@ -39,7 +39,7 @@
                     <!-- post featured & title -->
 
                     <div class="thumbnail span4">
-                        <img width="370" height="320" src="{{$post->image}}" class="attachment-blog_libra_small wp-post-image" alt="23"/>
+                        <img width="370" height="320" src="/images/blog/{{$post->image}}" class="attachment-blog_libra_small wp-post-image" alt="23"/>
 
                     </div>
 
@@ -94,7 +94,7 @@
                     <div class="recent-post group">
                         <div class="hentry-post group">
                             <div class="thumb-img">
-                                <img width="75" height="75" src="{{$best_post->image}}" class="attachment-blog_thumb wp-post-image" alt="23" />
+                                <img width="100" height="75" src="/images/blog/{{$best_post->image}}" class="attachment-blog_thumb wp-post-image" alt="23" />
                             </div>
                             <div class="text">
                                 <a href="blog-detail.hmtl" title="" class="title">

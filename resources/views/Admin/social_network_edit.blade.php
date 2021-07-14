@@ -1,4 +1,3 @@
-
 @extends('Layouts.layout')
 
 @section('title', 'F1 | Odessa')
@@ -37,16 +36,16 @@
             @endif
             <div class="row">
                 <!-- START CONTENT -->
-                <div style="text-align: center;" id="content-page" class="span12 content group">
+                <div id="content-page" class="span12 content group">
                     <form action="{{route('social_network_save_edit')}}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label style="color: gold" >Название</label>
-                            <input type="text" name="name" class="form-control" value="{{$social_network->name}}">
+                            <label style="color: gold">Название</label>
+                            <input type="text" name="name" class="span12" value="{{$social_network->name}}">
                         </div>
                         <div class="form-group col-md-9">
                             <label style="color: gold">Ссылка</label>
-                            <input type="text" name="link" class="form-control" value="{{$social_network->link}}">
+                            <input type="text" name="link" class="span12" value="{{$social_network->link}}">
                         </div>
                         <input type="hidden" name="id" value="{{$social_network->id}}">
                         <button type="submit" class="btn btn-ultraviolet-rays-1">Сохранить</button>
