@@ -99,6 +99,9 @@ return [
     |
     */
     'attributes' => [
-        'email' => 'электронный адрес',
+        'email' => 'Электронный адрес',
+        'name' => 'Имя',
+        'new_password' => 'Новый пароль',
+        'new_password_confirmation' => 'Еще раз новый пароль',
     ],
 ];

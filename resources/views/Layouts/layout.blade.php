@@ -143,7 +143,7 @@
                                 <li>
                                         @if(\Illuminate\Support\Facades\Auth::check())
                                             <a class="nav-link" style="color: gold"
-                                               href="{{route('user_cabinet', Auth::user()->id)}}">
+                                               href="{{route('user_cabinet')}}">
                                             <strong>{{\Illuminate\Support\Facades\Auth::user()->name}}</strong>
                                         @else
                                                     <a class="nav-link" style="color: gold"

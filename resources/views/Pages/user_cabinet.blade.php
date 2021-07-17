@@ -12,7 +12,7 @@
                     <!-- TITLE -->
                     <div class="title">
                         <div class="icontitle">
-                            <img src="/images/my/race.png" alt="title"/>
+                            <img height="50" width="50" src="/images/avatars/{{$user->avatar}}" alt="title"/>
                         </div>
                         <div class="title-with-icon">
                             <h1>{{$user->name}}</h1>
@@ -68,7 +68,9 @@
                             </tr>
                         </tbody>
                     </table>
+                    <a class="btn btn-warning" href="{{route('user_edit')}}" role="button">Редактировать</a>
                 </div>
+
                 <!-- END CONTENT -->
                 <!-- START EXTRA CONTENT -->
                 <!-- END EXTRA CONTENT -->

@@ -19,7 +19,9 @@ Route::get('/rules/{key}', 'PagesController@rule')->name('rule');
 Route::get('/posts', 'PagesController@posts')->name('posts');
 Route::get('/post/{id}', 'PagesController@single_post')->name('single_post');
 Route::post('/post/add_comment', 'PagesController@add_comment')->name('add_comment');
-Route::get('/user_cabinet/{id}', 'PagesController@user_cabinet')->name('user_cabinet');
+Route::get('/user_cabinet', 'PagesController@user_cabinet')->name('user_cabinet');
+Route::get('/user/edit', 'PagesController@user_edit')->name('user_edit');
+Route::post('/user/edit', 'PagesController@user_save_edit')->name('user_save_edit');
 
 
 Route::get('/competition/casino', 'CasinoController@index')->name('casino');
