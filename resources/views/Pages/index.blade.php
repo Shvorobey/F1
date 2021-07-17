@@ -120,47 +120,50 @@
                         <div class="row">
                             <!-- START SECTION BLOG -->
                             @foreach($_post as $post)
-                            <div class="section blog margin-bottom span12">
-                                <h2 class="title">
-                                    Свежая <span class="title-highlight">новость</span>
-                                </h2>
-                                <div class="row">
-                                    <div
-                                        class="post type-post status-publish format-video category-design span12 sticky">
-                                        <div class="row">
-                                            <div class="thumbnail span6">
-                                                <img width="263" height="243" src="/images/blog/{{$post->image}}"
-                                                     class="attachment-section_blog wp-post-image" alt="3"/>
-                                                <div class="date span1">
+                                <div class="section blog margin-bottom span12">
+                                    <h2 class="title">
+                                        Топ <span class="title-highlight">новость</span>
+                                    </h2>
+                                    <div class="row">
+                                        <div
+                                            class="post type-post status-publish format-video category-design span12 sticky">
+                                            <div class="row">
+                                                <div class="thumbnail span6">
+                                                    <img width="263" height="243" src="/images/blog/{{$post->image}}"
+                                                         class="attachment-section_blog wp-post-image" alt="3"/>
+                                                    <div class="date span1">
+                                                        <p>
+                                                            <span
+                                                                class="month">{{date('M', strtotime($post->created_at))}}</span>
+                                                            <span
+                                                                class="day">{{date('d', strtotime($post->created_at))}}</span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="the-content span6">
+                                                    <h4>
+                                                        <a href="{{route('single_post', $post->id)}}"
+                                                           title="{{$post->title}}">
+                                                            {!! $post->title !!}
+                                                        </a>
+                                                    </h4>
                                                     <p>
-                                                        <span class="month">{{date('M', strtotime($post->created_at))}}</span>
-                                                        <span class="day">{{date('d', strtotime($post->created_at))}}</span>
+                                                        {!! mb_substr($post->body, 0, 250) !!} ...
+                                                    </p>
+                                                    <p>
+                                                        <a href="{{route('single_post', $post->id)}}" class="more-link">||
+                                                            читать польностью</a>
                                                     </p>
                                                 </div>
                                             </div>
-
-                                            <div class="the-content span6">
-                                                <h4>
-                                                    <a href="{{route('single_post', $post->id)}}"
-                                                       title="{{$post->title}}">
-                                                        {!! $post->title !!}
-                                                    </a>
-                                                </h4>
-                                                <p>
-                                                    {!! mb_substr($post->body, 0, 250) !!} ...
-                                                </p>
-                                                <p>
-                                                    <a href="{{route('single_post', $post->id)}}" class="more-link">|| читать польностью</a>
-                                                </p>
-                                            </div>
                                         </div>
                                     </div>
+                                    @endforeach
                                 </div>
-                                @endforeach
-                            </div>
-                            <!-- END SECTION BLOG -->
+                                <!-- END SECTION BLOG -->
 
-                            <div class="clear"></div>
+                                <div class="clear"></div>
                         </div>
 
                         <div class="clear"></div>
@@ -168,101 +171,19 @@
                         <div class="margin-bottom">
                             <div class="logos-slider wrapper">
                                 <h2>
-                                    Our <span class="title-highlight">partners</span>
+                                    Наши <span class="title-highlight">партнеры</span>
                                 </h2>
                                 <div class="list_carousel">
                                     <ul class="logos-slides">
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/ugodno1.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/Tutti_1_01.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/tiecafe-011.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/Senza-titolo-1.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/nolt_400x4001.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/muffinstudio-011.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/logo-mix-1.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/ken.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/icecreammedia-011.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/garnise_011.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/capitan-cook1.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/bread1.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
-
-                                        <li style="height: 70px;">
-                                            <a href="#" class="bwWrapper">
-                                                <img src="images/slider/Apuragreen2.png" style="max-height: 70px;"
-                                                     class="logo"/>
-                                            </a>
-                                        </li>
+                                        @foreach($partners as $partner)
+                                            <li style="height: 70px;">
+                                                <a href="{{$partner->link}}" class="bwWrapper" target="_blank">
+                                                    <img src="images/slider/{{$partner->image}}"
+                                                         style="max-height: 70px;"
+                                                         class="logo"/>
+                                                </a>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                                 <div class="clear"></div>

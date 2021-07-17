@@ -19,9 +19,10 @@ Route::get('/rules/{key}', 'PagesController@rule')->name('rule');
 Route::get('/posts', 'PagesController@posts')->name('posts');
 Route::get('/post/{id}', 'PagesController@single_post')->name('single_post');
 Route::post('/post/add_comment', 'PagesController@add_comment')->name('add_comment');
-Route::get('/user_cabinet', 'PagesController@user_cabinet')->name('user_cabinet');
-Route::get('/user/edit', 'PagesController@user_edit')->name('user_edit');
-Route::post('/user/edit', 'PagesController@user_save_edit')->name('user_save_edit');
+Route::get('/post/del_comment/{id}', 'PagesController@delete_comment')->name('delete_comment');
+Route::get('/user_cabinet', 'UserCabinetController@user_cabinet')->name('user_cabinet');
+Route::get('/user/edit', 'UserCabinetController@user_edit')->name('user_edit');
+Route::post('/user/edit', 'UserCabinetController@user_save_edit')->name('user_save_edit');
 
 
 Route::get('/competition/casino', 'CasinoController@index')->name('casino');
@@ -47,6 +48,8 @@ Route::post('/F1_admin/post/add', 'PostsController@save_new')->name('post_save_n
 Route::get('/F1_admin/post/edit/{id}', 'PostsController@edit')->name('post_edit');
 Route::post('/F1_admin/post/edit/{id}', 'PostsController@save_edit')->name('post_save_edit');
 Route::delete('/F1_admin/post/delete', 'PostsController@delete')->name('post_delete');
+Route::post('/F1_admin/post/post_set', 'PostsController@post_set')->name('post_set');
+Route::get('/F1_admin/post/post_best/{id}', 'PostsController@post_best')->name('post_best');
 //RACE
 Route::get('/F1_admin/races', 'RacesController@all')->name('races');
 Route::post('/F1_admin/races/add', 'RacesController@add')->name('race_add');
@@ -62,7 +65,13 @@ Route::post('/F1_admin/user/activate', 'UsersController@admin_activate')->name('
 //Route::post('/F1_admin/race/edit', 'UsersController@save_edit')->name('race_save_edit');
 //Route::get('/F1_admin/race/delete/{id}', 'UsersController@race_activate')->name('race_activate');
 Route::delete('/F1_admin/user/delete', 'UsersController@delete')->name('user_delete');
-
+//PARTNERS
+Route::get('/F1_admin/partners', 'PartnersController@partners')->name('partners');
+Route::get('/F1_admin/partners/add', 'PartnersController@add')->name('partners_add');
+Route::post('/F1_admin/partners/add', 'PartnersController@save_new')->name('partner_save_new');
+Route::delete('/F1_admin/partners/delete', 'PartnersController@delete')->name('partner_delete');
+Route::get('/F1_admin/partners/edit/{id}', 'PartnersController@edit')->name('partner_edit');
+Route::post('/F1_admin/post/edit', 'PartnersController@save_edit')->name('partner_save_edit');
 
 Route::get('/404', function (){return view('Errors.404');})->name('404');
 

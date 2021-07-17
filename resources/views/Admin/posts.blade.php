@@ -39,7 +39,7 @@
                     </div>
                 @endforeach
             @endif
-                <a class="btn btn-warning" href="{{route('post_add')}}" role="button">+ Добавить</a>
+            <a class="btn btn-warning" href="{{route('post_add')}}" role="button">+ Добавить</a>
             <hr>
             <div class="row">
                 <!-- START CONTENT -->
@@ -51,6 +51,8 @@
                             <th scope="col">Каринка</th>
                             <th scope="col">Заголовок</th>
                             <th scope="col">Просмотры</th>
+                            <th scope="col">Закрепить</th>
+                            <th scope="col"></th>
                             <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
@@ -59,12 +61,36 @@
                         @foreach($posts as $post)
                             <tr>
                                 <th scope="row">{{$post->id}}</th>
-                                <td><img width="100" height="75" src="/images/blog/{{$post->image}}" class="attachment-blog_thumb wp-post-image" alt="23" />
+                                <td><img width="100" height="75" src="/images/blog/{{$post->image}}"
+                                         class="attachment-blog_thumb wp-post-image" alt="23"/>
                                 <td>{{$post->title}}</td>
                                 <td>{{$post->views}}</td>
-                                    <td>
-                                        <a class="btn btn-ultraviolet-rays-1" href="{{route('post_edit', $post->id)}}" role="button">Редактировать</a>
-                                    </td>
+                                <td>
+                                    @if($post->set == 2)
+                                        <img src="/images/my/best_post.png"/>
+                                    @elseif($post->set == 1)
+                                        <img src="/images/my/check.png"/>
+                                    @else
+                                        <img src="/images/my/uncheck.png"/>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($post->set != 2)
+                                        <form action="{{route('post_set')}}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{$post->id}}">
+                                            <input type="hidden" name="set" value="{{$post->set}}">
+                                            <button type="submit" class="btn btn-identification-4">
+                                                @if($post->set == 1)Открепить@elseЗакрепить@endif
+                                            </button>
+                                        </form>
+                                        <a class="btn btn-warning" href="{{route('post_best', $post->id)}}" role="button">Главная-> </a>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a class="btn btn-ultraviolet-rays-1" href="{{route('post_edit', $post->id)}}"
+                                       role="button">Редактировать</a>
+                                </td>
                                 <td>
                                     <form action="{{route('post_delete')}}" method="post">
                                         @csrf
@@ -85,12 +111,13 @@
                         @if($posts->count()>1)
                             @for($count=1; $count<=$posts->lastPage(); $count++)
                                 @if($count > $posts->currentPage()-3 and $count < $posts->currentPage()+3)
-                                    <a href='?page={{$count}}' @if($count==$posts->currentPage()) class='selected' @endif>{{$count}}</a>
+                                    <a href='?page={{$count}}'
+                                       @if($count==$posts->currentPage()) class='selected' @endif>{{$count}}</a>
                                 @endif
                             @endfor
                         @endif
                         @if($posts->currentPage() != $posts->lastPage())
-                            <a href='{{$posts->nextPageUrl()}}' >=></a>
+                            <a href='{{$posts->nextPageUrl()}}'>=></a>
                             <a href='?page={{$posts->lastPage()}}'>{{$posts->lastPage()}}</a>
                         @endif
                     </div>

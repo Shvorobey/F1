@@ -89,7 +89,7 @@
             <!-- START SIDEBAR -->
             <div id="sidebar-blog-sidebar" class="span3 sidebar group">
                 <div class="widget-first widget recent-posts">
-                    <h3>Лидеры <span class="title-highlight">просмотров</span></h3>
+                    <h3>Топ <span class="title-highlight">новости</span></h3>
                     @foreach($best_posts as $best_post)
                     <div class="recent-post group">
                         <div class="hentry-post group">

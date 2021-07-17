@@ -17,11 +17,6 @@
     <div class="container group">
         <div class="row">
             <!-- START CONTENT -->
-            @if(\Session::has('flash'))
-                <div class="box success-box">
-                    {{\Session::get('flash')}}
-                </div>
-            @endif
             <div id="content-blog" class="span9 content group">
                 <div class="post type-post status-publish format-standard hentry hentry-post group blog-libra-big row">
                     <!-- post featured & title -->
@@ -65,11 +60,19 @@
                             @if(count($post->comments) == 0)<p>Коментариев пока нет.</p>
                             @else
                                 <h3 id="reply-title"><span>Коментарии:</span></h3>
+                                @if(\Session::has('flash'))
+                                    <div class="box success-box">
+                                        {{\Session::get('flash')}}
+                                    </div>
+                                @endif
                                 @foreach($post->comments as $comment)
                                     <p class="comments">
                                         Автор: <strong style="color: red">{{$comment->author}}</strong><br>
                                         {{$comment->text}}<br>
                                         Добавлен: {{date('d.m.Y в G:i', strtotime($comment->created_at))}}
+                                @if(Auth::check() && Auth::user()->role >= 1)
+                                            <br><a class="btn btn-hem-5 " href="{{route('delete_comment', $comment->id)}}" role="button">Удалить</a>
+                                    @endif
                                     <hr>
                                     </p>
                                 @endforeach
@@ -103,7 +106,7 @@
             <!-- START SIDEBAR -->
             <div id="sidebar-blog-sidebar" class="span3 sidebar group">
                 <div class="widget-first widget recent-posts">
-                    <h3>Лидеры <span class="title-highlight">просмотров</span></h3>
+                    <h3>Топ <span class="title-highlight">новости</span></h3>
                     @foreach($best_posts as $best_post)
                         <div class="recent-post group">
                             <div class="hentry-post group">

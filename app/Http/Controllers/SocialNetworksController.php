@@ -11,7 +11,7 @@ class SocialNetworksController extends Controller
 {
     public function social_networks()
     {
-        if (Auth::check() && Auth::user()->role == 1) {
+        if (Auth::check() && Auth::user()->role >= 1) {
 
             return view('Admin.social_networks', ['social_networks' => SocialNetwork::all()]);
         }
@@ -20,7 +20,7 @@ class SocialNetworksController extends Controller
 
     public function add(Request $request)
     {
-        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'POST') {
+        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
@@ -47,7 +47,7 @@ class SocialNetworksController extends Controller
 
     public function edit($id)
     {
-        if (Auth::check() && Auth::user()->role == 1) {
+        if (Auth::check() && Auth::user()->role >= 1) {
 
             return view('Admin.social_network_edit', [
                     'social_network' =>
@@ -60,7 +60,7 @@ class SocialNetworksController extends Controller
 
     public function save_edit(Request $request)
     {
-        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'POST') {
+        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
                     'link' => 'required | url',
@@ -80,7 +80,7 @@ class SocialNetworksController extends Controller
 
     public function delete(Request $request)
     {
-        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'DELETE') {
+        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
             $social_network = SocialNetwork::find($request->input('id'));
             $social_network->delete();
             \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' удалена.');

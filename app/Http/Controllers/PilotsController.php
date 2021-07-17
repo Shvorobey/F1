@@ -15,7 +15,7 @@ class PilotsController extends Controller
 
     public function pilot_add(Request $request)
     {
-        if (Auth::check() && Auth::user()->role == 1) {
+        if (Auth::check() && Auth::user()->role >= 1) {
             if ($request->method() == 'POST') {
                 // Post validation
                 $this->validate($request, [
@@ -42,7 +42,7 @@ class PilotsController extends Controller
 
     public function delete(Request $request)
     {
-        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'DELETE') {
+        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
                 $pilot = Pilot::find($request->input('id'));
                 $pilot->delete();
                 \Session::flash('flash', 'Пилот ' . $pilot->name . ' больше никуда не едет.');
@@ -54,7 +54,7 @@ class PilotsController extends Controller
 
     public function pilot_edit(Request $request)
     {
-        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'POST') {
+        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
                 $this->validate($request, [
                         'name' => 'required | max:50 | min: 3',
                     ]

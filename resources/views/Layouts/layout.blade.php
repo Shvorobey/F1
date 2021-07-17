@@ -127,7 +127,7 @@
                                     @endforeach
                                 </ul>
                             </li>
-                            @if(\Illuminate\Support\Facades\Auth::check())
+                            @if(Auth::check() && Auth::user()->role >= 1)
                             <li>
                                 <a href="#">АДМИНКА</a>
                                 <ul class="sub-menu">
@@ -136,6 +136,7 @@
                                     <li><a href="{{route('posts_all')}}">Блог</a></li>
                                     <li><a href="{{route('races')}}">Гонки</a></li>
                                     <li><a href="{{route('users')}}">Пользователи</a></li>
+                                    <li><a href="{{route('partners')}}">Партнеры</a></li>
                                 </ul>
                             </li>
                             @endif
@@ -211,12 +212,21 @@
                 <div class="container">
                     <div class="row">
                         <div class="footer-widgets-area with-sidebar-right">
-                            <div class="widget-first widget span10 widget_text"><h3>About us</h3>
+                            <div class="widget-first widget span10 widget_text">
                                 <div class="textwidget">
-                                    Aliquam pellentesque pellentesque turpis, ut <a href="#">bibendum sapien</a>
-                                    sollicitudin nec
-                                    plasiren.
-                                    Pellentesque posuere ornare placerat. Suspendisse potenti.
+                                    <b>Formula 1 Odessa Club</b> - новое движение одесских фанатов формулы 1 и автоспорта.
+                                    Мы предлагаем объединиться всем ценителям королевских автогонок нашего региона.
+                                    Ответ на вопрос о том, где смотреть формулу 1 в Одессе очень прост - вместе с нашим клубом F1 Odessa club.
+                                    На все гонки любого гран при в сезоне организовывается отдельный сбор клуба в одном из спорт баров Одессы,
+                                    в котором обязательным условием является наличие прямого эфирa с автодрома. Помимо формулы 1 практикуются
+                                    просмотры других серий автогонок таких как мото гп, наскар, RОC (race of champions) и многое другое.
+                                    В наших чатах предлагается принять участие в конкурсах прогнозов для этого перед гонкой каждый может подать
+                                    свой прогноз и, в случае хорошего результата, получит интересный сувенир. Регулярно клуб организовывает
+                                    турниры по картингу на одном из украинских картинговых автодромов. Однако не только автоспортом живёт наш клуб.
+                                    Во время летних перерывов члены клуба собираются на пляжные пикники и осуществляют вылазки в красивые
+                                    места Украины. В зимнее межсезонье проводятся отдельные встречи на просмотр интересных гонок прошлых лет
+                                    или просто обсуждение текущих моментов в Формуле-1. Если вам не безразличен мир формулы 1 и автоспорта,
+                                    мы всегда будем рады видеть вас в своих рядах.
                                 </div>
                             </div>
                             <div class="widget-last widget span2 widget_nav_menu">

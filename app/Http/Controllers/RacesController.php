@@ -11,7 +11,7 @@ class RacesController extends Controller
 {
     public function all()
     {
-        if (Auth::check() && Auth::user()->role == 1) {
+        if (Auth::check() && Auth::user()->role >= 1) {
 
             return view('Admin.races', ['races' => Race::all()]);
         }
@@ -20,7 +20,7 @@ class RacesController extends Controller
 
     public function add(Request $request)
     {
-        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'POST') {
+        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
@@ -48,7 +48,7 @@ class RacesController extends Controller
 
     public function delete(Request $request)
     {
-        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'DELETE') {
+        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
             $race = Race::find($request->input('id'));
             $race->delete();
             \Session::flash('flash', 'Гонка ' . $race->name . ' успешно удалена.');
@@ -60,7 +60,7 @@ class RacesController extends Controller
 
     public function edit($id)
     {
-        if (Auth::check() && Auth::user()->role == 1) {
+        if (Auth::check() && Auth::user()->role >= 1) {
 
             return view('Admin.race_edit', [
                     'race' => Race::where('id', '=', $id)->first()
@@ -72,7 +72,7 @@ class RacesController extends Controller
 
     public function save_edit(Request $request)
     {
-        if (Auth::check() && Auth::user()->role == 1 && $request->method() == 'POST') {
+        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
                     'start' => 'required | date',
@@ -91,7 +91,7 @@ class RacesController extends Controller
 
     public function race_activate($id)
     {
-        if (Auth::check() && Auth::user()->role == 1) {
+        if (Auth::check() && Auth::user()->role >= 1) {
             Race::where('is_active', 1)->update(['is_active' => 0]);
             Race::where('id', $id)->update(['is_active' => 1]);
 
