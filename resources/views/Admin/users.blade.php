@@ -73,28 +73,30 @@
                                     @endif
                                 </td>
                                 <td>
-                                    @if($user->role != 2)
-                                        <form action="{{route('admin_activate')}}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{$user->id}}">
-                                            <input type="hidden" name="role" value="{{$user->role}}">
-                                            <button type="submit" class="btn   btn-friends-and-foes-2 ">
-                                                @if($user->role == 1)Сделать пользователем
-                                                @elseСделать администратором
-                                                @endif
-                                            </button>
-                                        </form>
-                                    @else
-                                        Супер Администратор
+                                    @if(Auth::check() && Auth::user()->role >= 2)
+                                        @if($user->role != 2)
+                                            <form action="{{route('admin_activate')}}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{$user->id}}">
+                                                <input type="hidden" name="role" value="{{$user->role}}">
+                                                <button type="submit" class="btn   btn-friends-and-foes-2 ">
+                                                    @if($user->role == 1)Сделать пользователем
+                                                    @elseСделать администратором
+                                                    @endif
+                                                </button>
+                                            </form>
+                                        @else
+                                            Супер Администратор
+                                        @endif
                                     @endif
                                 </td>
                                 <td>
                                     @if($user->role != 2)
                                         <a class="btn btn-ultraviolet-rays-1" href="{{route('post_edit', $user->id)}}"
                                            role="button">Редактировать</a>
-                                        @else
-                                            Супер Администратор
-                                        @endif
+                                    @else
+                                        Супер Администратор
+                                    @endif
                                 </td>
                                 <td>
                                     @if($user->role != 2)
