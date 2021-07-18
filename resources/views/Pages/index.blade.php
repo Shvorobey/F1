@@ -22,6 +22,15 @@
 
             <div class="thumb">
                 <img src="images/slider/flexslider/0026-150x150.jpg" alt="images/slider/flexslider/0026.jpg"/>
+                <div class="slide-content container align-right"
+                     style="background-image:url('/images/slider/flexslider/0026.jpg');">
+                    <div class="text">
+                        <h2>F1 Show the greatest racing spectacle on the planet.</h2>
+                        <p>
+                            Показать величайшее гоночное зрелище на планете.
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <div class="thumb">
@@ -111,7 +120,7 @@
                                         {{$competition->name}}
                                     </h4>
                                     <p>
-                                        {{$competition->description}}
+                                        {!! $competition->description !!}
                                     </p>
                                 </div>
                             </a>

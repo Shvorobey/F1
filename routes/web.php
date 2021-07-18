@@ -30,12 +30,12 @@ Route::get('/competition/champions_league', 'ChampionsLeagueController@index')->
 Route::get('/competition/forecaster', 'ForecasterController@index')->name('forecaster');
 
 //////////// ADMIN PANEL ////////////
-// PILOTS
+//PILOTS
 Route::get('/F1_admin/pilots', 'PilotsController@pilots')->name('pilots');
 Route::post('/F1_admin/pilot/add', 'PilotsController@pilot_add')->name('pilot_add');
 Route::post('/F1_admin/pilot/edit', 'PilotsController@pilot_edit')->name('pilot_edit');
 Route::delete('/F1_admin/pilot/delete', 'PilotsController@delete')->name('pilot_delete');
-// SOCIAL NETWORKS
+//SOCIAL NETWORKS
 Route::get('/F1_admin/social_networks', 'SocialNetworksController@social_networks')->name('social_networks');
 Route::post('/F1_admin/social_networks/add', 'SocialNetworksController@add')->name('social_network_add');
 Route::get('/F1_admin/social_networks/edit/{id}', 'SocialNetworksController@edit')->name('social_network_edit');
@@ -72,6 +72,11 @@ Route::post('/F1_admin/partners/add', 'PartnersController@save_new')->name('part
 Route::delete('/F1_admin/partners/delete', 'PartnersController@delete')->name('partner_delete');
 Route::get('/F1_admin/partners/edit/{id}', 'PartnersController@edit')->name('partner_edit');
 Route::post('/F1_admin/post/edit', 'PartnersController@save_edit')->name('partner_save_edit');
+//COMPETITIONS
+Route::get('/F1_admin/competitions', 'CompetitionsController@competitions')->name('competitions');
+Route::delete('/F1_admin/competitions/delete', 'CompetitionsController@delete')->name('competition_delete');
+Route::get('/F1_admin/competitions/edit/{id}', 'CompetitionsController@edit')->name('competition_edit');
+Route::post('/F1_admin/competitions/edit', 'CompetitionsController@save_edit')->name('competition_save_edit');
 
 Route::get('/404', function (){return view('Errors.404');})->name('404');
 

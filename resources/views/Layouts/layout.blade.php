@@ -137,6 +137,7 @@
                                     <li><a href="{{route('races')}}">Гонки</a></li>
                                     <li><a href="{{route('users')}}">Пользователи</a></li>
                                     <li><a href="{{route('partners')}}">Партнеры</a></li>
+                                    <li><a href="{{route('competitions')}}">Конкурсы</a></li>
                                 </ul>
                             </li>
                             @endif

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Competition;
 use App\Partner;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class PartnersController extends Controller
     {
         if (Auth::check() && Auth::user()->role >= 1) {
 
-            return view('Admin.partners', ['partners' => Partner::all()]);
+            return view('Admin.competitions', ['competitions' => Competition::all()]);
         }
         return abort(404);
     }
