@@ -11,6 +11,7 @@ use App\SocialNetwork;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Wkhooy\ObsceneCensorRus;
 
 
 class PagesController extends Controller
@@ -28,7 +29,7 @@ class PagesController extends Controller
     {
         return view('Pages.blog', [
                 'posts' => Post::orderBy('id', 'DESC')->paginate(5),
-                'best_posts' => Post::where('set', '>', 0)->limit(5)->get(),
+                'best_posts' => Post::where('set', '>', 0)->orderBy('set', 'desc')->limit(5)->get(),
                 'social_networks' => SocialNetwork::all()
             ]
         );
@@ -42,7 +43,7 @@ class PagesController extends Controller
 
         return view('Pages.single_post', [
                 'post' => $post,
-                'best_posts' => Post::where('set', '>', 0)->limit(5)->get(),
+                'best_posts' => Post::where('set', '>', 0)->orderBy('set', 'desc')->limit(5)->get(),
                 'social_networks' => SocialNetwork::all()
             ]
         );
@@ -52,14 +53,13 @@ class PagesController extends Controller
     {
         if (Auth::check() && $request->method() == 'POST') {
             $this->validate($request, [
-                    'author' => 'required | max:50 | min: 3',
                     'comment' => 'required | max:1000 | min: 2',
                 ]
             );
             $comment = new Comment();
             $comment->post_id = $request->input('post_id');
-            $comment->author = $request->input('author');
-            $comment->text = $request->input('comment');
+            $comment->author = Auth::user()->name;
+            $comment->text = ObsceneCensorRus::getFiltered($request->input('comment'));
             $comment->save();
 
             return back();

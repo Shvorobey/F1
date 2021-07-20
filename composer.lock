@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc802e59f5ad2491610e712fe1dad85d",
+    "content-hash": "1c4a9be1f454cc288267568aed098c4c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4716,6 +4716,58 @@
                 "source": "https://github.com/tinymce/tinymce-dist/tree/5.8.2"
             },
             "time": "2021-06-23T06:52:46+00:00"
+        },
+        {
+            "name": "vearutop/php-obscene-censor-rus",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vearutop/php-obscene-censor-rus.git",
+                "reference": "f0f489ae0eac4ee15c0c8130dea97e47303fe5e0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vearutop/php-obscene-censor-rus/zipball/f0f489ae0eac4ee15c0c8130dea97e47303fe5e0",
+                "reference": "f0f489ae0eac4ee15c0c8130dea97e47303fe5e0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Wkhooy\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Viacheslav Poturaev",
+                    "email": "vearutop@gmail.com",
+                    "homepage": "https://github.com/vearutop"
+                }
+            ],
+            "description": "Класс для фильтрации нецензурных выражений (матов).",
+            "homepage": "https://github.com/vearutop/php-obscene-censor-rus/",
+            "keywords": [
+                "censor",
+                "антимат",
+                "модерация",
+                "хуй",
+                "цензура"
+            ],
+            "support": {
+                "issues": "https://github.com/vearutop/php-obscene-censor-rus/issues",
+                "source": "https://github.com/vearutop/php-obscene-censor-rus/tree/v1.0.2"
+            },
+            "time": "2016-04-23T03:09:44+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

@@ -81,8 +81,6 @@
                             <form action="{{route('add_comment')}}" method="post">
                                 @csrf
                                 <input type="hidden" name="post_id" value="{{$post->id}}">
-                                <input type="hidden" name="author"
-                                       value="{{\Illuminate\Support\Facades\Auth::user()->name}}">
                                 <textarea class="span9 form-control overflow:hidden;" name="comment"></textarea>
                                 <br>
                                 <button class="btn btn-outline-primary">Добавить комментарий</button>

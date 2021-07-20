@@ -24,8 +24,10 @@ Route::get('/user_cabinet', 'UserCabinetController@user_cabinet')->name('user_ca
 Route::get('/user/edit', 'UserCabinetController@user_edit')->name('user_edit');
 Route::post('/user/edit', 'UserCabinetController@user_save_edit')->name('user_save_edit');
 
-
+//CASINO
 Route::get('/competition/casino', 'CasinoController@index')->name('casino');
+Route::post('/competition/casino', 'CasinoController@bet_save')->name('bet_save');
+
 Route::get('/competition/champions_league', 'ChampionsLeagueController@index')->name('champions_league');
 Route::get('/competition/forecaster', 'ForecasterController@index')->name('forecaster');
 

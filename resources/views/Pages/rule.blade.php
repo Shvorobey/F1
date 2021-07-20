@@ -67,24 +67,9 @@
                         <div class="widget-first widget widget-icon-text group">
                             <img class="imgicon" src="/images/emotion_smile.png" alt=""/>
 
-                            <h3>We will make you happy</h3>
+                            <h3>Выигрывает только тот</h3>
 
-                            <p>Duis aute irure dolor in moris.</p>
-
-                        </div>
-                        <div class="widget widget-icon-text group">
-                            <img class="imgicon" src="/images/phone5.png" alt=""/>
-
-                            <h3>Contact us</h3>
-
-                            <p>Call us + 39 095 3826830</p>
-                        </div>
-                        <div class="widget-last widget widget-icon-text group">
-                            <img class="imgicon" src="/images/flower.png" alt=""/>
-
-                            <h3>We&#8217;re kind!</h3>
-
-                            <p>..and do you love us?</p>
+                            <p>кто участвует.</p>
 
                         </div>
                     </div>

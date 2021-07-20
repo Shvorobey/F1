@@ -15,7 +15,8 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "2.4",
-        "tinymce/tinymce": "^5.8"
+        "tinymce/tinymce": "^5.8",
+        "vearutop/php-obscene-censor-rus": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.0",
