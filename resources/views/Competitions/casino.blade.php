@@ -3,6 +3,7 @@
 @section('title', 'F1 | Odessa')
 
 @section('content')
+    <link rel='stylesheet' id='custom-css' href='/css/timer.css' type='text/css' media='all'/>
     <!-- END HEADER -->
     <!-- START PAGE META -->
     <div id="page-meta" class="group">
@@ -39,8 +40,31 @@
                     </div>
                 @endforeach
             @endif
-            @if(Auth::check())
-                @if($stop)
+                @if(Auth::check())
+                    @if($stop)
+                <p class="countdown-title">До окончания приема ставок</p>
+                <div id="countdown" class="countdown">
+                    <div class="countdown-number">
+                        <span class="days countdown-time"></span>
+                        <span class="countdown-text">Дней</span>
+                    </div>
+                    <div class="countdown-number">
+                        <span class="hours countdown-time"></span>
+                        <span class="countdown-text">Часов</span>
+                    </div>
+                    <div class="countdown-number">
+                        <span class="minutes countdown-time"></span>
+                        <span class="countdown-text">Минут</span>
+                    </div>
+                    <div class="countdown-number">
+                        <span class="seconds countdown-time"></span>
+                        <span class="countdown-text">Секунд</span>
+                    </div>
+                    <div id="deadline-message" class="deadline-message">
+                        Ставки больше не принимаются!
+                    </div>
+                </div>
+<hr>
                     <label style="color: gold"> Сделайте свою ставку на гонку
                         <strong style="color: red">{{$race->name}}</strong>
                     </label>
@@ -73,6 +97,7 @@
                             </select>
                         </div>
                         <input type="hidden" name="race" value="{{$competition->id}}">
+                        <input type="hidden" id="a" value="{{date('F d Y H:i:00', strtotime($stop_date)) . ' GMT+0300'}}">
                         <input type="submit" class="btn btn-warning" value="Сделать ставку">
                     </form>
                 @else
@@ -95,5 +120,51 @@
     </div>
     </div>
     <!-- END PRIMARY -->
+    <script>
+        function getTimeRemaining(endtime) {
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var seconds = Math.floor((t / 1000) % 60);
+            var minutes = Math.floor((t / 1000 / 60) % 60);
+            var hours = Math.floor((t / (1000 * 60 * 60)) % 24);
+            var days = Math.floor(t / (1000 * 60 * 60 * 24));
+            return {
+                'total': t,
+                'days': days,
+                'hours': hours,
+                'minutes': minutes,
+                'seconds': seconds
+            };
+        }
+
+        function initializeClock(id, endtime) {
+            var clock = document.getElementById(id);
+            var daysSpan = clock.querySelector(".days");
+            var hoursSpan = clock.querySelector(".hours");
+            var minutesSpan = clock.querySelector(".minutes");
+            var secondsSpan = clock.querySelector(".seconds");
+
+            function updateClock() {
+                var t = getTimeRemaining(endtime);
+
+                if (t.total <= 0) {
+                    document.getElementById("countdown").className = "hidden";
+                    document.getElementById("deadline-message").className = "visible";
+                    clearInterval(timeinterval);
+                    return true;
+                }
+
+                daysSpan.innerHTML = t.days;
+                hoursSpan.innerHTML = ("0" + t.hours).slice(-2);
+                minutesSpan.innerHTML = ("0" + t.minutes).slice(-2);
+                secondsSpan.innerHTML = ("0" + t.seconds).slice(-2);
+            }
+
+            updateClock();
+            var timeinterval = setInterval(updateClock, 1000);
+        }
+        var deadline =  document.getElementById("a").value; // for endless timer
+        initializeClock('countdown', deadline);
+    </script>
+
 @endsection
 

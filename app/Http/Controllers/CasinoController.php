@@ -49,7 +49,8 @@ class CasinoController extends Controller
             'race' => $race,
             'bet_pilot' => $bet_pilot,
             'stop_date' => $stop_date,
-            'stop' => $stop
+            'stop' => $stop,
+            'a' => date('F d Y H:i:00', strtotime($stop_date)) .  ' GMT+0300'
         ]);
     }
 
