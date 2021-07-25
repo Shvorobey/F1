@@ -41,8 +41,8 @@
                 @endforeach
             @endif
                 @if(Auth::check())
-                    @if($stop)
-                <p class="countdown-title">До окончания приема ставок</p>
+                    @if(!$stop)
+                <h3 class="countdown-title">До окончания приема ставок</h3>
                 <div id="countdown" class="countdown">
                     <div class="countdown-number">
                         <span class="days countdown-time"></span>
@@ -65,27 +65,27 @@
                     </div>
                 </div>
 <hr>
-                    <label style="color: gold"> Сделайте свою ставку на гонку
+                    <h1 style="color: gold">Вы можете сделать ставку на гонку
                         <strong style="color: red">{{$race->name}}</strong>
-                    </label>
-                    <label style="color: gold">Ставку можно сделать или изменить до :
+                    </h1>
+                    <h2 style="color: gold">Ставку можно сделать или изменить до :
                         <strong style="color: red">{{date('H:i:00 / d.m.Y', strtotime($stop_date))}}</strong>
-                    </label>
+                    </h2>
                 @else
                     <label style="color: gold">Ставки больше не принимаются! Время окончания приема ставок:
                         <strong style="color: red">{{date('H:i:00 / d.m.Y', strtotime($stop_date))}}</strong>
                     </label>
                 @endif
                 @if(!empty($bet_pilot))
-                    <label style="color: deepskyblue">Вы уже сделали ставку на эту гонку. Ваша ставка: <strong
-                            style="color: red">{{$bet_pilot->name}}</strong> </label>
+                    <h3 style="color: gold">Вы уже сделали ставку на эту гонку. Ваша ставка: <strong
+                            style="color: red">{{$bet_pilot->name}}</strong> </h3>
                 @else
                     <label style="color: deepskyblue">Вы еще не делали ставку на эту гонку.</label>
 
                 @endif
                 <hr>
 
-                @if($stop)
+                @if(!$stop)
                     <form method="post" action="{{route('bet_save')}}">
                         @csrf
                         <div class="input-group mb-3">
@@ -96,9 +96,9 @@
                                 @endforeach
                             </select>
                         </div>
-                        <input type="hidden" name="race" value="{{$competition->id}}">
-                        <input type="hidden" id="a" value="{{date('F d Y H:i:00', strtotime($stop_date)) . ' GMT+0300'}}">
-                        <input type="submit" class="btn btn-warning" value="Сделать ставку">
+                        <input type="hidden" name="race" value="{{$race->id}}">
+                        <input type="hidden" id="finish" value="{{date('F d Y H:i:00', strtotime($stop_date)) . ' GMT+0300'}}">
+                        <input type="submit" class="btn btn-warning" value="@if(!empty($bet_pilot))Изменить ставку@elseСделать ставку@endif">
                     </form>
                 @else
                     <div class="row">
@@ -162,7 +162,7 @@
             updateClock();
             var timeinterval = setInterval(updateClock, 1000);
         }
-        var deadline =  document.getElementById("a").value; // for endless timer
+        var deadline =  document.getElementById("finish").value; // for endless timer
         initializeClock('countdown', deadline);
     </script>
 

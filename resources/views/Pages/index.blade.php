@@ -174,9 +174,6 @@
 
                                 <div class="clear"></div>
                         </div>
-
-                        <div class="clear"></div>
-
                         <div class="margin-bottom">
                             <div class="logos-slider wrapper">
                                 <h2>
@@ -243,20 +240,13 @@
 
                             });
                         </script>
-
-
                     </div>
-                    <!-- START COMMENTS -->
-                    <div id="comments"></div>
-                    <!-- END COMMENTS -->
                 </div>
-                <!-- END CONTENT -->
-
-                <!-- START EXTRA CONTENT -->
-                <!-- END EXTRA CONTENT -->
-
             </div>
         </div>
     </div>
+    <script type='text/javascript' src='/sliders/polaroid/js/jquery.polaroid.js'></script>
+    <script type='text/javascript' src='/sliders/polaroid/js/jquery.transform-0.8.0.min.js'></script>
+    <script type='text/javascript' src='/sliders/polaroid/js/jquery.preloader.js'></script>
     <!-- END PRIMARY -->
 @endsection

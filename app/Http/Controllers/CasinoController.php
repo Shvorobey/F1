@@ -17,12 +17,6 @@ class CasinoController extends Controller
         $pilots = [];
         $bet_pilot = '';
         $race = Race::where('is_active', 1)->first();
-        $stop = true;
-        $current = Carbon::now();
-        $stop_date = Carbon::parse($race->start)->subMinute(20);
-        if ($current->diffInSeconds($stop_date, false) <= 0) {
-            $stop = false;
-        }
 
         if (Auth::check()) {
             $pil = Pilot::all()->toArray();
@@ -35,12 +29,7 @@ class CasinoController extends Controller
                 if (!in_array($pilot['id'], $pilots_used))
                     $pilots[] = $pilot;
 
-            $bet = DB::table('casino_bets')
-                ->where('user_id', Auth::user()->id)
-                ->where('race_id', $race->id)
-                ->first();
-
-            if (!empty($bet))
+            if (!empty($bet = Competition::getCasinoBet($race->id)))
                 $bet_pilot = Pilot::where('id', $bet->pilot_id)->first();
         }
         return view('Competitions.casino', [
@@ -48,30 +37,34 @@ class CasinoController extends Controller
             'competition' => Competition::where('key', '=', 'casino')->first(),
             'race' => $race,
             'bet_pilot' => $bet_pilot,
-            'stop_date' => $stop_date,
-            'stop' => $stop,
-            'a' => date('F d Y H:i:00', strtotime($stop_date)) .  ' GMT+0300'
+            'stop_date' => Carbon::parse($race->start)->subMinute(20),
+            'stop' => Competition::isExpired($race->start, 20),
+            'finish' => date('F d Y H:i:00', strtotime(Carbon::parse($race->start)->subMinute(20))) . ' GMT+0300'
         ]);
     }
 
     public function bet_save(Request $request)
     {
         if (Auth::check() && $request->method() == 'POST') {
+            $race = Race::find($request->input('race'));
+            if (Competition::isExpired($race->start, 20)) {
+                \Session::flash('flash', 'Время возможности сделать ставку вышло');
+                return back();
+            }
             $this->validate($request, [
                     'pilot' => 'required | integer | min: 1',
                     'race' => 'required | integer | min: 1',
                 ]
             );
-            DB::insert('insert into casino_bets (user_id, pilot_id, race_id) values (?, ?, ?)', [
-                Auth::user()->id,
-                $request->input('pilot'),
-                $request->input('race')
-            ]);
-            \Session::flash('flash', 'Ставка принята');
+            if (!empty(Competition::getCasinoBet($race->id))) {
+                Competition::updateBet($request->input('pilot'), $request->input('race'));
+
+                return back();
+            }
+            Competition::addBet($request->input('pilot'), $request->input('race'));
 
             return back();
         }
-
 
         return abort(404);
     }
