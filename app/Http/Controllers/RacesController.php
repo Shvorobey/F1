@@ -84,7 +84,7 @@ class RacesController extends Controller
             $race->save();
             \Session::flash('flash', 'Гонка ' . $race->name . ' успешно изменена.');
 
-            return back();
+            return redirect('races');
         }
         return abort(404);
     }

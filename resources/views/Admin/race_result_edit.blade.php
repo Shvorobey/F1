@@ -45,7 +45,7 @@
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form method="post" action="{{route('race_result_save')}}">
+                    <form method="post" action="{{route('race_result_update', $race->id)}}">
                         @csrf
                         <input type="hidden" name="race_id" value="{{$race->id}}">
                         <table class="table table-striped">
@@ -56,17 +56,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($pilots as $pilot)
+                            @foreach($results as $result)
                                 <tr>
-                                    <th scope="row">{{$pilot->name}}</th>
+                                    <th scope="row">{{$result->pilot->name}}</th>
                                     <td>
-                                        <input type="number" name="place [{{$pilot->id}}]" min="0" max="100">
+                                        <input type="number" name="result [{{$result->id}}]" value="{{$result->place}}" min="0" max="100" required>
                                     </td>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        <button type="submit" class="btn btn-warning">Сохранить</button>
+                        <button type="submit" class="btn btn-warning">Обновить</button>
                     </form>
                 </div>
                 <!-- END CONTENT -->
@@ -77,5 +77,3 @@
     </div>
     <!-- END PRIMARY -->
 @endsection
-
-

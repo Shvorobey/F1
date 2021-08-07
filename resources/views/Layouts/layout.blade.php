@@ -112,6 +112,12 @@
                                 </ul>
                             </li>
                             <li>
+                                <a href="#">ГОНКИ</a>
+                                <ul class="sub-menu">
+                                    <a href="{{route('races_user')}}">ГОНКИ</a>
+                                </ul>
+                            </li>
+                            <li>
                                 <a href="{{route('posts')}}">БЛОГ</a>
                                 <ul class="sub-menu">
                                     <li><a href="{{route('posts')}}">Блог</a></li>
@@ -138,7 +144,6 @@
                                     <li><a href="{{route('users')}}">Пользователи</a></li>
                                     <li><a href="{{route('partners')}}">Партнеры</a></li>
                                     <li><a href="{{route('competitions')}}">Конкурсы</a></li>
-                                    <li><a href="{{route('race_result')}}">Результаты гонок</a></li>
                                 </ul>
                             </li>
                             @endif

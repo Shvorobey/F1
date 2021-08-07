@@ -16,7 +16,8 @@
                         </div>
                         <div class="title-with-icon">
                             <h1>
-                                Результаты гонки <strong style="color: gold"> {{$race->name}}</strong>
+                                Результаты гонки <strong style="color: gold"> {{$race->name}} </strong>
+                                (Старт <strong style="color: gold"> {{date('d.m.Y в G:i', strtotime($race->start))}})</strong>
                             </h1>
                         </div>
                     </div>
@@ -29,45 +30,27 @@
     <!-- START PRIMARY -->
     <div id="primary" class="sidebar-right">
         <div class="container group">
-            @if(\Session::has('flash'))
-                <div class="box success-box">
-                    {{\Session::get('flash')}}
-                </div>
-            @endif
-            @if ($errors->any())
-                @foreach ($errors->all() as $error)
-                    <div class="box error-box">
-                        {{ $error }}
-                    </div>
-                @endforeach
-            @endif
-
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form method="post" action="{{route('race_result_save')}}">
-                        @csrf
-                        <input type="hidden" name="race_id" value="{{$race->id}}">
                         <table class="table table-striped">
                             <thead>
                             <tr>
-                                <th scope="col">Пилот</th>
                                 <th scope="col">Позиция</th>
+                                <th scope="col">Пилот</th>
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($pilots as $pilot)
+                            @foreach($results as $result)
                                 <tr>
-                                    <th scope="row">{{$pilot->name}}</th>
                                     <td>
-                                        <input type="number" name="place [{{$pilot->id}}]" min="0" max="100">
+                                        {{$result->place}}
                                     </td>
+                                    <th scope="row">{{$result->pilot->name}}</th>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        <button type="submit" class="btn btn-warning">Сохранить</button>
-                    </form>
                 </div>
                 <!-- END CONTENT -->
                 <!-- START EXTRA CONTENT -->
@@ -77,5 +60,4 @@
     </div>
     <!-- END PRIMARY -->
 @endsection
-
 

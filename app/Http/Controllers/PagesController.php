@@ -6,6 +6,8 @@ use App\Comment;
 use App\Competition;
 use App\Partner;
 use App\Post;
+use App\Race;
+use App\RaceResult;
 use App\Rule;
 use App\SocialNetwork;
 use App\User;
@@ -87,6 +89,18 @@ class PagesController extends Controller
         return view('Pages.rule', [
                 'competition' => $competition,
                 'rules' => $rules
+            ]
+        );
+    }
+
+    public function races(){
+        return view('Pages.races', ['races' => Race::all()]);
+    }
+
+    public function single_race($id){
+        return view('Pages.single_race', [
+                'results' => RaceResult::where('race_id', '=', $id)->orderBy('place', 'ASC')->get(),
+                'race' => Race::find($id)
             ]
         );
     }

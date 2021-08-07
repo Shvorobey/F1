@@ -20,6 +20,8 @@ Route::get('/posts', 'PagesController@posts')->name('posts');
 Route::get('/post/{id}', 'PagesController@single_post')->name('single_post');
 Route::post('/post/add_comment', 'PagesController@add_comment')->name('add_comment');
 Route::get('/post/del_comment/{id}', 'PagesController@delete_comment')->name('delete_comment');
+Route::get('/races', 'PagesController@races')->name('races_user');
+Route::get('/single_race/{id}', 'PagesController@single_race')->name('single_race_user');
 Route::get('/user_cabinet', 'UserCabinetController@user_cabinet')->name('user_cabinet');
 Route::get('/user/edit', 'UserCabinetController@user_edit')->name('user_edit');
 Route::post('/user/edit', 'UserCabinetController@user_save_edit')->name('user_save_edit');
@@ -97,8 +99,9 @@ Route::prefix('F1_AdmiN')->group(function () {
     Route::prefix('race_result')->group(function () {
         Route::get('/', 'RaceResultController@race_result')->name('race_result');
         Route::post('/', 'RaceResultController@save')->name('race_result_save');
+        Route::get('/{id}', 'RaceResultController@single')->name('race_result_single');
 //        Route::get('/edit/{id}', 'RaceResultController@edit')->name('race_result_edit');
-//        Route::post('/edit', 'RaceResultController@save_edit')->name('race_result_save_edit');
+        Route::post('/{id}', 'RaceResultController@update')->name('race_result_update');
     });
 });
 
