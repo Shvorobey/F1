@@ -28,12 +28,11 @@ Route::post('/user/edit', 'UserCabinetController@user_save_edit')->name('user_sa
 
 //CASINO
 Route::prefix('competition')->group(function () {
-    Route::prefix('casino')->group(function (){
+    Route::prefix('casino')->group(function () {
         Route::get('/', 'CasinoController@index')->name('casino');
         Route::post('/', 'CasinoController@bet_save')->name('bet_save');
         Route::get('/results', 'CasinoController@results')->name('casino_results');
     });
-
 
 
     Route::get('/champions_league', 'ChampionsLeagueController@index')->name('champions_league');
@@ -119,6 +118,8 @@ Route::prefix('F1_AdmiN')->group(function () {
         Route::post('/add', 'SlidersController@save')->name('slider_save');
         Route::get('/edit/{id}', 'SlidersController@edit')->name('slider_edit');
         Route::post('/edit/{id}', 'SlidersController@update')->name('slider_edit_save');
+        Route::get('/up/{id}', 'SlidersController@up')->name('slider_up');
+        Route::get('/down/{id}', 'SlidersController@down')->name('slider_down');
     });
 });
 

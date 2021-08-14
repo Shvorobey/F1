@@ -40,15 +40,16 @@
                     <form action="{{route('post_save_new')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label style="color: gold" >Заголовок</label>
-                            <input class="span12" type="text" name="title"  placeholder="Введите заголовок поста" value="{{old('title')}}">
+                            <label style="color: gold">Заголовок</label>
+                            <input class="span12" type="text" name="title" placeholder="Введите заголовок поста"
+                                   value="{{old('title')}}">
                         </div>
                         <div class="form-group col-md-12">
                             <label style="color: gold">Текст поста</label>
                             <textarea class="span12 form-control tinymce-editor" name="body">{{old('body')}}</textarea>
                         </div>
                         <div class="form-group">
-                            <label style="color: gold" >Изображение</label>
+                            <label style="color: gold">Изображение</label>
                             <input type="file" name="image">
                         </div>
                         <button type="submit" class="btn btn-ultraviolet-rays-1">Сохранить</button>

@@ -42,23 +42,25 @@
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form action="{{route('slider_edit_save', $slider->id)}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('slider_edit_save', $slider->id)}}" method="post"
+                          enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label style="color: gold" >Изображение 150 X 150</label>
+                            <label style="color: gold">Изображение 150 X 150</label>
                             <input type="file" name="small_image">
                         </div>
                         <div class="form-group">
-                            <label style="color: gold" >Изображение 1920 X 400</label>
+                            <label style="color: gold">Изображение 1920 X 400</label>
                             <input type="file" name="big_image">
                         </div>
                         <div class="form-group">
-                            <label style="color: gold" >Заголовок</label>
+                            <label style="color: gold">Заголовок</label>
                             <input class="span12" type="text" name="title" value="{{$slider->title}}">
                         </div>
                         <div class="form-group col-md-12">
                             <label style="color: gold">Текст</label>
-                            <textarea class="span12 form-control tinymce-editor" name="text">{{$slider->text}}</textarea>
+                            <textarea class="span12 form-control tinymce-editor"
+                                      name="text">{{$slider->text}}</textarea>
                         </div>
                         <button type="submit" class="btn btn-ultraviolet-rays-1">Сохранить</button>
                     </form>

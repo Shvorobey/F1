@@ -39,8 +39,8 @@
                     </div>
                 @endforeach
             @endif
-                <a class="btn btn-warning" href="{{route('slider_add')}}" role="button">+ Добавить</a>
-                <hr>
+            <a class="btn btn-warning" href="{{route('slider_add')}}" role="button">+ Добавить</a>
+            <hr>
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
@@ -49,6 +49,7 @@
                         <tr>
                             <th scope="col">Порядок</th>
                             <th scope="col">Активность</th>
+                            <th scope="col">Позиция</th>
                             <th scope="col">Иконка</th>
                             <th scope="col">Заголовок</th>
                             <th scope="col">Текст</th>
@@ -63,13 +64,21 @@
                                 <th scope="row">{{$slider->order}}</th>
                                 <td>
                                     @if($slider->is_active == 1)
-                                        <img src="/images/my/yes.jpg" alt="title"/>
+                                        <img src="/images/my/yes.jpg" alt="да"/>
                                     @else
-                                        <img src="/images/my/no.jpg" alt="title"/>
+                                        <img src="/images/my/no.jpg" alt="нет"/>
                                     @endif
                                 </td>
                                 <td>
-                                   <img alt="Иконка" src="/images/slider/flexslider/{{$slider->small_image}}" />
+                                    @if($slider->order != 1)
+                                        <a href="{{route('slider_up', $slider->id)}}"><img src="/images/my/up.png" alt="Переместить вверх"/></a>
+                                    @endif
+                                    @if($slider->order != $max)
+                                            <a href="{{route('slider_down', $slider->id)}}"> <img src="/images/my/down.png" alt="Переместить вниз"/> </a>
+                                    @endif
+                                </td>
+                                <td>
+                                    <img alt="Иконка" src="/images/slider/flexslider/{{$slider->small_image}}"/>
                                 </td>
                                 <td>
                                     {!! $slider->title !!}
@@ -82,7 +91,8 @@
                                        role="button">Редактировать</a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-friends-and-foes-2"  href="{{route('slider_deactivate', $slider->id)}}"
+                                    <a class="btn btn-friends-and-foes-2"
+                                       href="{{route('slider_deactivate', $slider->id)}}"
                                        role="button">
                                         @if($slider->is_active == 1)
                                             Деактивирвать

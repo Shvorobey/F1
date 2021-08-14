@@ -45,16 +45,17 @@
                     <form action="{{route('slider_save')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label style="color: gold" >Изображение 150 X 150</label>
+                            <label style="color: gold">Изображение 150 X 150</label>
                             <input type="file" name="small_image">
                         </div>
                         <div class="form-group">
-                            <label style="color: gold" >Изображение 1920 X 400</label>
+                            <label style="color: gold">Изображение 1920 X 400</label>
                             <input type="file" name="big_image">
                         </div>
                         <div class="form-group">
-                            <label style="color: gold" >Заголовок</label>
-                            <input class="span12" type="text" name="title"  placeholder="Введите заголовок слайда" value="{{old('title')}}">
+                            <label style="color: gold">Заголовок</label>
+                            <input class="span12" type="text" name="title" placeholder="Введите заголовок слайда"
+                                   value="{{old('title')}}">
                         </div>
                         <div class="form-group col-md-12">
                             <label style="color: gold">Текст</label>

@@ -14,6 +14,7 @@ class SlidersController extends Controller
 
             return view('Admin.Sliders.sliders', [
                     'sliders' => Slider::orderBy('order', 'ASC')->get(),
+                    'max' => Slider::max('order'),
                 ]
             );
         }
@@ -35,10 +36,12 @@ class SlidersController extends Controller
         return abort(404);
     }
 
-    public function delete(Request $request){
+    public function delete(Request $request)
+    {
         if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
             $slider = Slider::find($request->input('id'));
             $slider->delete();
+            Slider::positions_update();
             \Session::flash('flash', 'Слайдер ' . $slider->title . ' успешно удален.');
 
             return back();
@@ -133,6 +136,28 @@ class SlidersController extends Controller
             \Session::flash('flash', 'Слайд ' . $slider->title . ' успешно обновлен.');
 
             return redirect()->route('sliders');
+        }
+        return abort(404);
+    }
+
+    public function up($id){
+        if (Auth::check() && Auth::user()->role >= 1) {
+        $order = Slider::where('id', $id)->value('order');
+        Slider::where('order', $order-1)->update(['order' => $order]);
+        Slider::where('id', $id)->update(['order' => $order-1]);
+
+            return back();
+        }
+        return abort(404);
+    }
+
+    public function down($id){
+        if (Auth::check() && Auth::user()->role >= 1) {
+        $order = Slider::where('id', $id)->value('order');
+        Slider::where('order', $order+1)->update(['order' => $order]);
+        Slider::where('id', $id)->update(['order' => $order+1]);
+
+            return back();
         }
         return abort(404);
     }
