@@ -9,6 +9,7 @@ use App\Post;
 use App\Race;
 use App\RaceResult;
 use App\Rule;
+use App\Slider;
 use App\SocialNetwork;
 use App\User;
 use Illuminate\Http\Request;
@@ -21,8 +22,14 @@ class PagesController extends Controller
     public function index()
     {
         return view('Pages.index', [
-                '_post' => Post::where('set', '=', 2)->limit(1)->get(),
-                'partners' => Partner::all()
+                '_post' => Post::where('set', '=', 2)
+                    ->limit(1)
+                    ->get(),
+                'partners' => Partner::all(),
+                'sliders' => Slider::where('is_active', '=', 1)
+                    ->orderBy('order', 'ASC')
+                    ->limit(8)
+                    ->get(),
             ]
         );
     }
@@ -32,7 +39,7 @@ class PagesController extends Controller
         return view('Pages.blog', [
                 'posts' => Post::orderBy('id', 'DESC')->paginate(5),
                 'best_posts' => Post::where('set', '>', 0)->orderBy('set', 'desc')->limit(5)->get(),
-                'social_networks' => SocialNetwork::all()
+                'social_networks' => SocialNetwork::all(),
             ]
         );
     }
@@ -46,7 +53,7 @@ class PagesController extends Controller
         return view('Pages.single_post', [
                 'post' => $post,
                 'best_posts' => Post::where('set', '>', 0)->orderBy('set', 'desc')->limit(5)->get(),
-                'social_networks' => SocialNetwork::all()
+                'social_networks' => SocialNetwork::all(),
             ]
         );
     }
@@ -69,7 +76,8 @@ class PagesController extends Controller
         return abort(404);
     }
 
-    public function delete_comment($id){
+    public function delete_comment($id)
+    {
         if (Auth::check() && Auth::user()->role >= 1) {
             $comment = Comment::find($id);
             $comment->delete();
@@ -81,26 +89,29 @@ class PagesController extends Controller
 
     public function rule($key)
     {
-//        if (!in_array($key, ['casino', 'champions_league','forecaster']))
         $competition = Competition::where('key', '=', $key)->first();
         if (!$competition)
             return view('Errors.404');
         $rules = Rule::where('competition_key', '=', $key)->get();
         return view('Pages.rule', [
                 'competition' => $competition,
-                'rules' => $rules
+                'rules' => $rules,
             ]
         );
     }
 
-    public function races(){
-        return view('Pages.races', ['races' => Race::all()]);
+    public function races()
+    {
+        return view('Pages.races', [
+            'races' => Race::all(),
+        ]);
     }
 
-    public function single_race($id){
+    public function single_race($id)
+    {
         return view('Pages.single_race', [
                 'results' => RaceResult::where('race_id', '=', $id)->orderBy('place', 'ASC')->get(),
-                'race' => Race::find($id)
+                'race' => Race::find($id),
             ]
         );
     }

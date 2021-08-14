@@ -12,12 +12,10 @@
                     <!-- TITLE -->
                     <div class="title">
                         <div class="icontitle">
-                            <img src="/images/my/race_result.png" alt="title"/>
+                            <img src="/images/my/sliders.png" alt="title"/>
                         </div>
                         <div class="title-with-icon">
-                            <h1>
-                                Результаты гонки <strong style="color: gold"> {{$race->name}}</strong>
-                            </h1>
+                            <h1>Редактировать слайд</h1>
                         </div>
                     </div>
                 </div>
@@ -41,32 +39,28 @@
                     </div>
                 @endforeach
             @endif
-
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form method="post" action="{{route('race_result_save')}}">
+                    <form action="{{route('slider_edit_save', $slider->id)}}" method="post" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="race_id" value="{{$race->id}}">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col">Пилот</th>
-                                <th scope="col">Позиция</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($pilots as $pilot)
-                                <tr>
-                                    <th scope="row">{{$pilot->name}}</th>
-                                    <td>
-                                        <input type="number" name="place [{{$pilot->id}}]" min="0" max="100">
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                        <button type="submit" class="btn btn-warning">Сохранить</button>
+                        <div class="form-group">
+                            <label style="color: gold" >Изображение 150 X 150</label>
+                            <input type="file" name="small_image">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: gold" >Изображение 1920 X 400</label>
+                            <input type="file" name="big_image">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: gold" >Заголовок</label>
+                            <input class="span12" type="text" name="title" value="{{$slider->title}}">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label style="color: gold">Текст</label>
+                            <textarea class="span12 form-control tinymce-editor" name="text">{{$slider->text}}</textarea>
+                        </div>
+                        <button type="submit" class="btn btn-ultraviolet-rays-1">Сохранить</button>
                     </form>
                 </div>
                 <!-- END CONTENT -->
@@ -77,5 +71,4 @@
     </div>
     <!-- END PRIMARY -->
 @endsection
-
 

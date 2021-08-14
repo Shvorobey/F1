@@ -48,6 +48,7 @@
                         <thead>
                         <tr>
                             <th scope="col">Имя</th>
+                            <th scope="col">Лого</th>
                             <th scope="col">Ссылка</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
@@ -59,6 +60,9 @@
                                 <th scope="row">{{$partner->name}}</th>
                                 <td>
                                     <a href="{{$partner->link}}">{{$partner->link}}</a>
+                                </td>
+                                <td>
+                                    <img alt="Логотип" width="35" height="35" src="/images/slider/{{$partner->image}}" />
                                 </td>
                                 <td>
                                     <a class="btn btn-ultraviolet-rays-1"

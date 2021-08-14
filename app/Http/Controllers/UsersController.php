@@ -13,41 +13,47 @@ class UsersController extends Controller
     {
         if (Auth::check() && Auth::user()->role >= 1) {
 
-            return view('Admin.users', ['users' => User::all()]);
+            return view('Admin.Users.users', ['users' => User::all()]);
         }
+
         return abort(404);
     }
 
-    public function admin_activate(Request $request){
+    public function admin_activate(Request $request)
+    {
         if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
-                $id = $request->input('id');
-                $role = $request->input('role');
+            $id = $request->input('id');
+            $role = $request->input('role');
 
-                if($role == 1){
-                    User::where('id', $id)->update(['role' => 0]);
-                    \Session::flash('flash', 'Пользователь № ' . $id . ' убран из администраторов.');
+            if ($role == 1) {
+                User::where('id', $id)->update(['role' => 0]);
+                \Session::flash('flash', 'Пользователь № ' . $id . ' убран из администраторов.');
 
-                    return back();
-                }elseif($role == 0){
-                    User::where('id', $id)->update(['role' => 1]);
-                    \Session::flash('flash', 'Пользователь № ' . $id . ' добавлен в администраторы.');
+                return back();
 
-                    return back();
-                }
+            } elseif ($role == 0) {
+                User::where('id', $id)->update(['role' => 1]);
+                \Session::flash('flash', 'Пользователь № ' . $id . ' добавлен в администраторы.');
+
+                return back();
+            }
         }
+
         return abort(404);
     }
 
     public function delete(Request $request)
     {
         if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
-                $user = User::find($request->input('id'));
-                if ($user->role != 2){
-                    $user->delete();
-                    \Session::flash('flash', 'Пользователь ' . $user->name . ' успешно удален.');
-                    return back();
-                }
+            $user = User::find($request->input('id'));
+            if ($user->role != 2) {
+                $user->delete();
+                \Session::flash('flash', 'Пользователь ' . $user->name . ' успешно удален.');
+
+                return back();
             }
-            return abort(404);
+        }
+
+        return abort(404);
     }
 }

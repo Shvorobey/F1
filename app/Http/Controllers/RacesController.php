@@ -13,7 +13,7 @@ class RacesController extends Controller
     {
         if (Auth::check() && Auth::user()->role >= 1) {
 
-            return view('Admin.races', ['races' => Race::all()]);
+            return view('Admin.Race.races', ['races' => Race::all()]);
         }
         return abort(404);
     }
@@ -29,15 +29,8 @@ class RacesController extends Controller
             );
             $race = new Race();
             $race->name = $request->input('name');
-//                $race->start = date('Y-m-d ', strtotime($request->input('start')));
             $race->start = $request->input('start');
             $race->save();
-
-            // Post adding logging
-//                $log = new Logger('new');
-//                $log->pushHandler(new StreamHandler(__DIR__ . '/../../Logs/new_posts_log.log', Logger::INFO));
-//                $log->info('Пользователь ' . Auth::user()->name . ' добавил пост № ' . $post->id);
-//                $log->info('Пост "' . $post->title . '" был добавлен пользователем с адресом: ' . Auth::user()->email);
 
             \Session::flash('flash', 'Гонка ' . $race->name . ' успешно добавлена.');
 
@@ -62,7 +55,7 @@ class RacesController extends Controller
     {
         if (Auth::check() && Auth::user()->role >= 1) {
 
-            return view('Admin.race_edit', [
+            return view('Admin.Race.race_edit', [
                     'race' => Race::where('id', '=', $id)->first()
                 ]
             );
@@ -70,7 +63,7 @@ class RacesController extends Controller
         return abort(404);
     }
 
-    public function save_edit(Request $request)
+    public function update(Request $request)
     {
         if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
             $this->validate($request, [

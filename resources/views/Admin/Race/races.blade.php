@@ -90,15 +90,17 @@
                                        role="button">Редактировать</a>
                                     </td>
                                 <td>
-                                    <a class="btn btn-ultraviolet-rays-1" href="{{route('race_activate', $race->id)}}"
-                                       role="button">Сделать активной</a>
+                                    @if($race->is_active != 1)
+                                        <a class="btn btn-ultraviolet-rays-1"
+                                           href="{{route('race_activate', $race->id)}}"
+                                           role="button">Сделать активной</a>
+                                    @endif
                                 </td>
                                 <td>
-                                    @if($race->is_active == 1)
+                                    @if($race->is_active == 1 && count($race->raceResults)==0)
                                         <a class="btn btn-ultraviolet-rays-1" href="{{route('race_result')}}"
                                            role="button">Записать результат</a>
                                     @endif
-
                                 </td>
                                 <td>
                                     @if(count($race->raceResults)>0)
@@ -127,5 +129,3 @@
     </div>
     <!-- END PRIMARY -->
 @endsection
-
-

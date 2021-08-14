@@ -13,7 +13,7 @@ class SocialNetworksController extends Controller
     {
         if (Auth::check() && Auth::user()->role >= 1) {
 
-            return view('Admin.social_networks', ['social_networks' => SocialNetwork::all()]);
+            return view('Admin.SocialNetwork.social_networks', ['social_networks' => SocialNetwork::all()]);
         }
         return abort(404);
     }
@@ -32,12 +32,6 @@ class SocialNetworksController extends Controller
             $social_network->link = $request->input('link');
             $social_network->save();
 
-            // Post adding logging
-//                $log = new Logger('new');
-//                $log->pushHandler(new StreamHandler(__DIR__ . '/../../Logs/new_posts_log.log', Logger::INFO));
-//                $log->info('Пользователь ' . Auth::user()->name . ' добавил пост № ' . $post->id);
-//                $log->info('Пост "' . $post->title . '" был добавлен пользователем с адресом: ' . Auth::user()->email);
-
             \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' успешно добавлена.');
 
             return back();
@@ -49,7 +43,7 @@ class SocialNetworksController extends Controller
     {
         if (Auth::check() && Auth::user()->role >= 1) {
 
-            return view('Admin.social_network_edit', [
+            return view('Admin.SocialNetwork.social_network_edit', [
                     'social_network' =>
                         SocialNetwork::where('id', '=', $id)->first()
                 ]
@@ -58,7 +52,7 @@ class SocialNetworksController extends Controller
         return abort(404);
     }
 
-    public function save_edit(Request $request)
+    public function update(Request $request)
     {
         if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
             $this->validate($request, [

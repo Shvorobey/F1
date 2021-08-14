@@ -14,7 +14,7 @@ class RaceResultController extends Controller
     public function race_result()
     {
         if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.race_result', [
+            return view('Admin.RaceResult.race_result', [
                     'pilots' => Pilot::all(),
                     'race' => Race::where('is_active', 1)->first()
                 ]
@@ -44,7 +44,7 @@ class RaceResultController extends Controller
     public function single($id)
     {
         if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.race_result_edit', [
+            return view('Admin.RaceResult.race_result_edit', [
                     'results' => RaceResult::where('race_id', '=', $id)->get(),
                     'race' => Race::find($id)
                 ]

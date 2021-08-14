@@ -12,11 +12,11 @@
                     <!-- TITLE -->
                     <div class="title">
                         <div class="icontitle">
-                            <img src="/images/my/race_result.png" alt="title"/>
+                            <img src="/images/pages/casino_c.png" alt="title"/>
                         </div>
                         <div class="title-with-icon">
                             <h1>
-                                Результаты гонки <strong style="color: gold"> {{$race->name}}</strong>
+                                Результаты конкурса <strong style="color: gold"> {{$casino->name}}</strong>
                             </h1>
                         </div>
                     </div>
@@ -41,39 +41,44 @@
                     </div>
                 @endforeach
             @endif
-
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form method="post" action="{{route('race_result_update', $race->id)}}">
-                        @csrf
-                        <input type="hidden" name="race_id" value="{{$race->id}}">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col">Пилот</th>
-                                <th scope="col">Позиция</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($results as $result)
-                                <tr>
-                                    <th scope="row">{{$result->pilot->name}}</th>
-                                    <td>
-                                        <input type="number" name="result [{{$result->id}}]" value="{{$result->place}}" min="0" max="100" required>
-                                    </td>
-                                </tr>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Участник</th>
+                            @foreach($races as $race)
+                                <th scope="col">{{mb_substr($race->name, 0, 3)}}</th>
                             @endforeach
-                            </tbody>
-                        </table>
-                        <button type="submit" class="btn btn-warning">Обновить</button>
-                    </form>
+                            <th scope="col">Итого</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($results as $user => $result)
+                            <tr>
+                                <th scope="row">{{stristr($user, ' ')}}</th>
+                                @foreach($races as $race)
+                                    <td>
+                                        @if(isset($result[$race->id]))
+                                            {{$result[$race->id]}}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                @endforeach
+                                <td>
+{{$result['total']}}
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
                 </div>
                 <!-- END CONTENT -->
-                <!-- START EXTRA CONTENT -->
-                <!-- END EXTRA CONTENT -->
             </div>
         </div>
     </div>
     <!-- END PRIMARY -->
 @endsection
+

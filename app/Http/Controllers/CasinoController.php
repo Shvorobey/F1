@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Casino;
 use App\Competition;
 use App\Pilot;
 use App\Race;
+use App\RaceResult;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -12,6 +14,19 @@ use Carbon\Carbon;
 
 class CasinoController extends Controller
 {
+    const SCORE = [
+        1 => 25,
+        2 => 18,
+        3 => 15,
+        4 => 12,
+        5 => 10,
+        6 => 8,
+        7 => 6,
+        8 => 4,
+        9 => 2,
+        10 => 1
+    ];
+
     public function index()
     {
         $pilots = [];
@@ -67,5 +82,60 @@ class CasinoController extends Controller
         }
 
         return abort(404);
+    }
+
+    public function count($id)
+    {
+        if (Auth::check() && Auth::user()->role >= 1) {
+            if (!empty(Casino::where('race_id', '=', $id)->first())) {
+                \Session::flash('flash_error', 'Результаты прогнозов этой гонки уже посчитаны.');
+                return back();
+            }
+            $score = 0;
+            $bets = DB::table('casino_bets')
+                ->where('race_id', $id)
+                ->get()
+                ->toArray();
+            foreach ($bets as $bet) {
+                $result = RaceResult::where('race_id', '=', $id)
+                    ->where('pilot_id', '=', $bet->pilot_id)
+                    ->pluck('place')
+                    ->first();
+                if (!empty($result) && !empty(self::SCORE[$result])) {
+                    $score = self::SCORE[$result];
+                }
+                $total_score = 26 - $result + $score;
+                $casino = new Casino();
+                $casino->user_id = $bet->user_id;
+                $casino->race_id = $id;
+                $casino->score = $total_score;
+                $casino->save();
+            }
+            \Session::flash('flash', 'Результаты прогнозов успешно посчитаны.');
+            return redirect()->route('casino_results');
+        }
+
+        return abort(404);
+    }
+
+    public function results()
+    {
+        $results = [];
+        $final_results = [];
+        foreach (Casino::orderBy('user_id', 'asc')->get() as $result) {
+            $results[$result->user->name][$result->race_id] = $result->score;
+        }
+        foreach ($results as $user => $races) {
+            $results[$user]['total'] = array_sum($races);
+            $final_results[array_sum($races) . ' ' . $user] = $results[$user];
+        }
+        krsort($final_results, SORT_NUMERIC);
+
+        return view('Competitions.casino_results', [
+                'casino' => Competition::where('key', '=', 'casino')->first(),
+                'races' => Race::all(),
+                'results' => $final_results,
+            ]
+        );
     }
 }

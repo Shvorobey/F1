@@ -10,10 +10,10 @@ class PilotsController extends Controller
 {
     public function pilots()
     {
-        return view('Admin.pilots', ['pilots' => Pilot::all()]);
+        return view('Admin.Pilots.pilots', ['pilots' => Pilot::all()]);
     }
 
-    public function pilot_add(Request $request)
+    public function add(Request $request)
     {
         if (Auth::check() && Auth::user()->role >= 1) {
             if ($request->method() == 'POST') {
@@ -43,30 +43,30 @@ class PilotsController extends Controller
     public function delete(Request $request)
     {
         if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
-                $pilot = Pilot::find($request->input('id'));
-                $pilot->delete();
-                \Session::flash('flash', 'Пилот ' . $pilot->name . ' больше никуда не едет.');
+            $pilot = Pilot::find($request->input('id'));
+            $pilot->delete();
+            \Session::flash('flash', 'Пилот ' . $pilot->name . ' больше никуда не едет.');
 
-                return back();
-            }
+            return back();
+        }
         return abort(404);
     }
 
-    public function pilot_edit(Request $request)
+    public function edit(Request $request)
     {
         if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
-                $this->validate($request, [
-                        'name' => 'required | max:50 | min: 3',
-                    ]
-                );
-                $pilot = Pilot::where('id', '=', $request->input('id'))->first();
-                $pilot->name = $request->input('name');
-                $pilot->save();
+            $this->validate($request, [
+                    'name' => 'required | max:50 | min: 3',
+                ]
+            );
+            $pilot = Pilot::where('id', '=', $request->input('id'))->first();
+            $pilot->name = $request->input('name');
+            $pilot->save();
 
-                \Session::flash('flash', 'Имя пилота # ' . $pilot->id . ' успешно изменено на ' . $pilot->name . '.');
+            \Session::flash('flash', 'Имя пилота # ' . $pilot->id . ' успешно изменено на ' . $pilot->name . '.');
 
-                return back();
-            }
+            return back();
+        }
         return abort(404);
     }
 }

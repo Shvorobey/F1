@@ -14,7 +14,7 @@ class PartnersController extends Controller
     {
         if (Auth::check() && Auth::user()->role >= 1) {
 
-            return view('Admin.competitions', ['competitions' => Competition::all()]);
+            return view('Admin.Partners.partners', ['partners' => Partner::all()]);
         }
         return abort(404);
     }
@@ -22,12 +22,12 @@ class PartnersController extends Controller
     public function add()
     {
         if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.partner_add');
+            return view('Admin.Partners.partner_add');
         }
         return abort(404);
     }
 
-    public function save_new(Request $request)
+    public function save(Request $request)
     {
         if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
             // Post validation
@@ -59,12 +59,12 @@ class PartnersController extends Controller
     public function edit($id)
     {
         if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.partner_edit', ['partner' => Partner::find($id)]);
+            return view('Admin.Partners.partner_edit', ['partner' => Partner::find($id)]);
         }
         return abort(404);
     }
 
-    public function save_edit(Request $request)
+    public function update(Request $request)
     {
         if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
             // Post validation

@@ -7,81 +7,21 @@
     <!-- BEGIN FLEXSLIDER SLIDER -->
     <div id="slider-polaroid-0" class="slider slider-polaroid polaroid no-responsive" style="height:400px;">
         <div class="thumbs  container">
-            <div class="thumb">
-                <img src="/images/slider/flexslider/002-150x150.png" alt="/images/slider/flexslider/002.png"/>
-                <div class="slide-content container align-right"
-                     style="background-image:url('/images/slider/flexslider/002.png');">
-                    <div class="text">
-                        <h2>F1 Show the greatest racing spectacle on the planet.</h2>
-                        <p>
-                            Показать величайшее гоночное зрелище на планете.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="thumb">
-                <img src="images/slider/flexslider/0026-150x150.jpg" alt="images/slider/flexslider/0026.jpg"/>
-                <div class="slide-content container align-right"
-                     style="background-image:url('/images/slider/flexslider/0026.jpg');">
-                    <div class="text">
-                        <h2>F1 Show the greatest racing spectacle on the planet.</h2>
-                        <p>
-                            Показать величайшее гоночное зрелище на планете.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="thumb">
-                <img src="images/slider/flexslider/003-150x150.png" alt="images/slider/flexslider/003.png"/>
-                <div class="slide-content container align-right"
-                     style="background-image:url('images/slider/flexslider/003.png');">
-                    <div class="text">
-                        <h2>Be nice. Be original.</h2>
-                        <p>
-                            Quisque nec mi eu nibh aliquam elementum. Ut cursus nisl sit amet sapien dignissim at
-                            adipiscing lectus ornare. Aenean id lorem orci.
-                            Morbi lacinia nunc quis lectus condimentum rutrum.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="thumb">
-                <img src="images/slider/flexslider/0043-150x150.jpg" alt="images/slider/flexslider/0043.jpg"/>
-                <div class="slide-content container align-right full"
-                     style="background-image:url('images/slider/flexslider/0043.jpg');">
-                    <div class="container">
+            @foreach($sliders as $slider)
+                <div class="thumb">
+                    <img src="/images/slider/flexslider/{{$slider->small_image}}"
+                         alt="/images/slider/flexslider/{{$slider->big_image}}"/>
+                    <div class="slide-content container align-right full"
+                         style="background-image:url('/images/slider/flexslider/{{$slider->big_image}}');">
                         <div class="text">
-                            <h2>
-                                <span style="color: #0c243d;">Need a WordPress</span>
-                                <span style="color: #919303;">solution?</span>
-                            </h2>
-
+                            <h2>{!! $slider->title !!}</h2>
                             <p>
-                                <span style="color: #434f5b;">Check this theme.</span>
-                                <br/>
-                                <span style="color: #8b8005;">Flexible, versatile, pixel perfect.</span>
-                            </p>
-
-                            <p>
-                                    <span style="color: #434f5b;">
-                                    A complete solution for your corporate/portfolio site.<br/>
-                                    </span>
+                                {!! $slider->text !!}
                             </p>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="thumb">
-                <img src="images/slider/flexslider/0052-150x150.jpg" alt="images/slider/flexslider/0052.jpg"/>
-                <div class="slide-content container align-right full"
-                     style="background-image:url('images/slider/flexslider/0052.jpg');">
-                    <div class="container"></div>
-                </div>
-            </div>
+            @endforeach
         </div>
     </div>
 
