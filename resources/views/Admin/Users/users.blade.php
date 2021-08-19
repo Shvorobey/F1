@@ -75,7 +75,7 @@
                                 <td>
                                     @if(Auth::check() && Auth::user()->role >= 2)
                                         @if($user->role != 2)
-                                            <form action="{{route('admin_activate')}}" method="post">
+                                            <form action="{{route('users')}}" method="post">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{$user->id}}">
                                                 <input type="hidden" name="role" value="{{$user->role}}">
@@ -100,7 +100,7 @@
                                 </td>
                                 <td>
                                     @if($user->role != 2)
-                                        <form action="{{route('user_delete')}}" method="post">
+                                        <form action="{{route('users')}}" method="post">
                                             @csrf
                                             {{method_field('delete')}}
                                             <input type="hidden" name="id" value="{{$user->id}}">

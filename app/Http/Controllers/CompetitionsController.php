@@ -8,26 +8,22 @@ use Illuminate\Support\Facades\Auth;
 
 class CompetitionsController extends Controller
 {
-    public function competitions()
+    public function competitions(Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
+        if ($request->method() == 'DELETE') {
+            $competition = Competition::find($request->input('id'));
+            $competition->delete();
+            \Session::flash('flash', 'Конкурс ' . $competition->name . ' успешно удален.');
 
-            return view('Admin.Competitions.competitions', ['competitions' => Competition::all()]);
+            return back();
         }
-        return abort(404);
+
+        return view('Admin.Competitions.competitions', ['competitions' => Competition::all()]);
     }
 
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.Competitions.competition_edit', ['competition' => Competition::find($id)]);
-        }
-        return abort(404);
-    }
-
-    public function update(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'name' => 'string | required | min: 2 | max:255',
@@ -44,18 +40,7 @@ class CompetitionsController extends Controller
 
             return redirect()->route('competitions');
         }
-        return abort(404);
-    }
 
-    public function delete(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
-            $competition = Competition::find($request->input('id'));
-            $competition->delete();
-            \Session::flash('flash', 'Конкурс ' . $competition->name . ' успешно удален.');
-
-            return back();
-        }
-        return abort(404);
+        return view('Admin.Competitions.competition_edit', ['competition' => Competition::find($id)]);
     }
 }

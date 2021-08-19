@@ -43,7 +43,7 @@
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form method="post" action="{{route('race_save_edit', $race->id)}}">
+                    <form method="post" action="{{route('race_edit', $race->id)}}">
                         @csrf
                         <div class="input-group mb-3">
                             <div class="input-group-prepend">

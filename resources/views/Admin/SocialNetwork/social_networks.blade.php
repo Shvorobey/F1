@@ -39,7 +39,7 @@
                     </div>
                 @endforeach
             @endif
-                <form method="post" action="{{route('social_network_add')}}">
+                <form method="post" action="{{route('social_networks')}}">
                     @csrf
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -77,7 +77,7 @@
                                        href="{{route('social_network_edit', $social_network->id)}}" role="button">Редактировать</a>
                                 </td>
                                 <td>
-                                    <form action="{{route('social_network_delete')}}" method="post">
+                                    <form action="{{route('social_networks')}}" method="post">
                                         @csrf
                                         {{method_field('delete')}}
                                         <input type="hidden" name="id" value="{{$social_network->id}}">

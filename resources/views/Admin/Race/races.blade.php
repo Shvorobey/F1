@@ -32,6 +32,11 @@
                     {{\Session::get('flash')}}
                 </div>
             @endif
+            @if(\Session::has('flash_error'))
+                <div class="box error-box">
+                    {{\Session::get('flash_error')}}
+                </div>
+            @endif
             @if ($errors->any())
                 @foreach ($errors->all() as $error)
                     <div class="box error-box">
@@ -39,7 +44,7 @@
                     </div>
                 @endforeach
             @endif
-            <form method="post" action="{{route('race_add')}}">
+            <form method="post" action="{{route('races')}}">
                 @csrf
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -82,13 +87,13 @@
                                         <img src="/images/my/no.jpg" alt="title"/>
                                     @endif
                                 </td>
-                                    <td>
-                                        <strong>{{date('d.m.Y в G:i', strtotime($race->start))}}</strong>
-                                    </td>
-                                    <td>
+                                <td>
+                                    <strong>{{date('d.m.Y в G:i', strtotime($race->start))}}</strong>
+                                </td>
+                                <td>
                                     <a class="btn btn-ultraviolet-rays-1" href="{{route('race_edit', $race->id)}}"
                                        role="button">Редактировать</a>
-                                    </td>
+                                </td>
                                 <td>
                                     @if($race->is_active != 1)
                                         <a class="btn btn-ultraviolet-rays-1"
@@ -104,17 +109,20 @@
                                 </td>
                                 <td>
                                     @if(count($race->raceResults)>0)
-                                        <a class="btn btn-ultraviolet-rays-1" href="{{route('race_result_single', $race->id)}}"
+                                        <a class="btn btn-ultraviolet-rays-1"
+                                           href="{{route('race_result_single', $race->id)}}"
                                            role="button">Результат</a>
                                     @endif
                                 </td>
                                 <td>
-                                    <form action="{{route('race_delete')}}" method="post">
-                                        @csrf
-                                        {{method_field('delete')}}
-                                        <input type="hidden" name="id" value="{{$race->id}}">
-                                        <button type="submit" class="btn btn-hem-5 ">Удалить</button>
-                                    </form>
+                                    @if($race->is_active != 1 )
+                                        <form action="{{route('races')}}" method="post">
+                                            @csrf
+                                            {{method_field('delete')}}
+                                            <input type="hidden" name="id" value="{{$race->id}}">
+                                            <button type="submit" class="btn btn-hem-5 ">Удалить</button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach

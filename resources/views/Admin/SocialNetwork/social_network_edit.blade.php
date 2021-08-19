@@ -37,7 +37,7 @@
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form action="{{route('social_network_save_edit')}}" method="post">
+                    <form action="{{route('social_network_edit', $social_network->id)}}" method="post">
                         @csrf
                         <div class="form-group">
                             <label style="color: gold">Название</label>

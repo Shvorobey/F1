@@ -8,25 +8,22 @@ use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
-    public function all()
+    public function all(Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.Posts.posts', ['posts' => Post::orderBy('id', 'DESC')->paginate(10)]);
+        if ($request->method() == 'DELETE') {
+            $post = Post::find($request->input('id'));
+            $post->delete();
+            \Session::flash('flash', 'Пост № ' . $post->id . ' успешно удален.');
+
+            return back();
         }
-        return abort(404);
+
+        return view('Admin.Posts.posts', ['posts' => Post::orderBy('id', 'DESC')->paginate(10)]);
     }
 
-    public function add()
+    public function add(Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.Posts.post_add');
-        }
-        return abort(404);
-    }
-
-    public function save(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'title' => 'string | required | min: 5 | max:255',
@@ -50,20 +47,13 @@ class PostsController extends Controller
 
             return redirect()->route('single_post', $post->id);
         }
-        return abort(404);
+
+        return view('Admin.Posts.post_add');
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.Posts.post_edit', ['post' => Post::find($id)]);
-        }
-        return abort(404);
-    }
-
-    public function update(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'title' => 'string | required | min: 5 | max:255',
@@ -96,24 +86,14 @@ class PostsController extends Controller
 
             return redirect()->route('single_post', $post->id);
         }
-        return abort(404);
+
+        return view('Admin.Posts.post_edit', ['post' => Post::find($id)]);
+
     }
 
-    public function delete(Request $request)
+    public function post_set($id, Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
-            $post = Post::find($request->input('id'));
-            $post->delete();
-            \Session::flash('flash', 'Пост № ' . $post->id . ' успешно удален.');
-
-            return back();
-        }
-        return abort(404);
-    }
-
-    public function post_set(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             $id = $request->input('id');
             $set = $request->input('set');
 
@@ -126,17 +106,10 @@ class PostsController extends Controller
             }
             return back();
         }
-        return abort(404);
-    }
 
-    public function post_best($id)
-    {
-        if (Auth::check() && Auth::user()->role >= 1) {
-            Post::where('set', 2)->update(['set' => 0]);
-            Post::where('id', $id)->update(['set' => 2]);
+        Post::where('set', 2)->update(['set' => 0]);
+        Post::where('id', $id)->update(['set' => 2]);
 
-            return back();
-        }
-        return abort(404);
+        return back();
     }
 }

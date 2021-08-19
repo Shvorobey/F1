@@ -39,7 +39,7 @@
                     </div>
                 @endforeach
             @endif
-            <form method="post" action="{{route('pilot_add')}}">
+            <form method="post" action="{{route('pilots')}}">
                 @csrf
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -80,7 +80,7 @@
                                     </td>
                                 </form>
                                 <td>
-                                    <form action="{{route('pilot_delete')}}" method="post">
+                                    <form action="{{route('pilots')}}" method="post">
                                         @csrf
                                         {{method_field('delete')}}
                                         <input type="hidden" name="id" value="{{$pilot->id}}">

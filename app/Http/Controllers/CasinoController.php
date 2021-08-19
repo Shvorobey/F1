@@ -60,7 +60,7 @@ class CasinoController extends Controller
 
     public function bet_save(Request $request)
     {
-        if (Auth::check() && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             $race = Race::find($request->input('race'));
             if (Competition::isExpired($race->start, 20)) {
                 \Session::flash('flash', 'Время возможности сделать ставку вышло');
@@ -86,7 +86,6 @@ class CasinoController extends Controller
 
     public function count($id)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
             if (!empty(Casino::where('race_id', '=', $id)->first())) {
                 \Session::flash('flash_error', 'Результаты прогнозов этой гонки уже посчитаны.');
                 return back();
@@ -112,10 +111,8 @@ class CasinoController extends Controller
                 $casino->save();
             }
             \Session::flash('flash', 'Результаты прогнозов успешно посчитаны.');
-            return redirect()->route('casino_results');
-        }
 
-        return abort(404);
+            return redirect()->route('casino_results');
     }
 
     public function results()

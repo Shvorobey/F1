@@ -37,7 +37,7 @@
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form action="{{route('post_save_new')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('post_add')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label style="color: gold">Заголовок</label>

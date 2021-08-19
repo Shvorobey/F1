@@ -76,7 +76,7 @@
                                 </td>
                                 <td>
                                     @if($post->set != 2)
-                                        <form action="{{route('post_set')}}" method="post">
+                                        <form action="{{route('post_set', $post->id)}}" method="post">
                                             @csrf
                                             <input type="hidden" name="id" value="{{$post->id}}">
                                             <input type="hidden" name="set" value="{{$post->set}}">
@@ -84,7 +84,7 @@
                                                 @if($post->set == 1)Открепить@elseЗакрепить@endif
                                             </button>
                                         </form>
-                                        <a class="btn btn-warning" href="{{route('post_best', $post->id)}}" role="button">Главная-> </a>
+                                        <a class="btn btn-warning" href="{{route('post_set', $post->id)}}" role="button">Главная-> </a>
                                     @endif
                                 </td>
                                 <td>
@@ -92,7 +92,7 @@
                                        role="button">Редактировать</a>
                                 </td>
                                 <td>
-                                    <form action="{{route('post_delete')}}" method="post">
+                                    <form action="{{route('posts_all')}}" method="post">
                                         @csrf
                                         {{method_field('delete')}}
                                         <input type="hidden" name="id" value="{{$post->id}}">

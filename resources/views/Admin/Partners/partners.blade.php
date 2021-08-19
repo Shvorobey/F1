@@ -69,7 +69,7 @@
                                        href="{{route('partner_edit', $partner->id)}}" role="button">Редактировать</a>
                                 </td>
                                 <td>
-                                    <form action="{{route('partner_delete')}}" method="post">
+                                    <form action="{{route('partners')}}" method="post">
                                         @csrf
                                         {{method_field('delete')}}
                                         <input type="hidden" name="id" value="{{$partner->id}}">

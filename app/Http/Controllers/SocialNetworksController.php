@@ -9,18 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class SocialNetworksController extends Controller
 {
-    public function social_networks()
+    public function social_networks(Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-
-            return view('Admin.SocialNetwork.social_networks', ['social_networks' => SocialNetwork::all()]);
-        }
-        return abort(404);
-    }
-
-    public function add(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
@@ -36,25 +27,20 @@ class SocialNetworksController extends Controller
 
             return back();
         }
-        return abort(404);
-    }
 
-    public function edit($id)
-    {
-        if (Auth::check() && Auth::user()->role >= 1) {
+        if ($request->method() == 'DELETE') {
+            $social_network = SocialNetwork::find($request->input('id'));
+            $social_network->delete();
+            \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' удалена.');
 
-            return view('Admin.SocialNetwork.social_network_edit', [
-                    'social_network' =>
-                        SocialNetwork::where('id', '=', $id)->first()
-                ]
-            );
+            return back();
         }
-        return abort(404);
+        return view('Admin.SocialNetwork.social_networks', ['social_networks' => SocialNetwork::all()]);
     }
 
-    public function update(Request $request)
+    public function edit($id, Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
                     'link' => 'required | url',
@@ -69,18 +55,10 @@ class SocialNetworksController extends Controller
 
             return redirect()->route('social_networks');
         }
-        return abort(404);
-    }
-
-    public function delete(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
-            $social_network = SocialNetwork::find($request->input('id'));
-            $social_network->delete();
-            \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' удалена.');
-
-            return back();
-        }
-        return abort(404);
+        return view('Admin.SocialNetwork.social_network_edit', [
+                'social_network' =>
+                    SocialNetwork::where('id', '=', $id)->first()
+            ]
+        );
     }
 }

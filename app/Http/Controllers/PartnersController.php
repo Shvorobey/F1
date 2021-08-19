@@ -10,26 +10,22 @@ use Illuminate\Support\Facades\Auth;
 
 class PartnersController extends Controller
 {
-    public function partners()
+    public function partners(Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
+        if ($request->method() == 'DELETE') {
+            $partner = Partner::find($request->input('id'));
+            $partner->delete();
+            \Session::flash('flash', 'Партнер ' . $partner->name . ' успешно удален.');
 
-            return view('Admin.Partners.partners', ['partners' => Partner::all()]);
+            return back();
         }
-        return abort(404);
+
+        return view('Admin.Partners.partners', ['partners' => Partner::all()]);
     }
 
-    public function add()
+    public function add(Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.Partners.partner_add');
-        }
-        return abort(404);
-    }
-
-    public function save(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'name' => 'string | required | min: 2 | max:255',
@@ -53,20 +49,13 @@ class PartnersController extends Controller
 
             return redirect()->route('partners');
         }
-        return abort(404);
+        return view('Admin.Partners.partner_add');
+
     }
 
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.Partners.partner_edit', ['partner' => Partner::find($id)]);
-        }
-        return abort(404);
-    }
-
-    public function update(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'name' => 'string | required | min: 2 | max:255',
@@ -90,18 +79,8 @@ class PartnersController extends Controller
 
             return redirect()->route('partners');
         }
-        return abort(404);
-    }
 
-    public function delete(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
-            $partner = Partner::find($request->input('id'));
-            $partner->delete();
-            \Session::flash('flash', 'Партнер ' . $partner->name . ' успешно удален.');
+        return view('Admin.Partners.partner_edit', ['partner' => Partner::find($id)]);
 
-            return back();
-        }
-        return abort(404);
     }
 }

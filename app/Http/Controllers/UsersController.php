@@ -9,19 +9,9 @@ use function Composer\Autoload\includeFile;
 
 class UsersController extends Controller
 {
-    public function all()
+    public function users(Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-
-            return view('Admin.Users.users', ['users' => User::all()]);
-        }
-
-        return abort(404);
-    }
-
-    public function admin_activate(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             $id = $request->input('id');
             $role = $request->input('role');
 
@@ -39,12 +29,7 @@ class UsersController extends Controller
             }
         }
 
-        return abort(404);
-    }
-
-    public function delete(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
+        if ($request->method() == 'DELETE') {
             $user = User::find($request->input('id'));
             if ($user->role != 2) {
                 $user->delete();
@@ -54,6 +39,7 @@ class UsersController extends Controller
             }
         }
 
-        return abort(404);
+        return view('Admin.Users.users', ['users' => User::all()]);
+
     }
 }

@@ -63,7 +63,7 @@
                                        href="{{route('competition_edit', $competition->id)}}" role="button">Редактировать</a>
                                 </td>
                                 <td>
-                                    <form action="{{route('competition_delete')}}" method="post">
+                                    <form action="{{route('competitions')}}" method="post">
                                         @csrf
                                         {{method_field('delete')}}
                                         <input type="hidden" name="id" value="{{$competition->id}}">

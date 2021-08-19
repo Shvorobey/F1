@@ -9,18 +9,9 @@ use Illuminate\Support\Facades\Auth;
 
 class RacesController extends Controller
 {
-    public function all()
+    public function races(Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-
-            return view('Admin.Race.races', ['races' => Race::all()]);
-        }
-        return abort(404);
-    }
-
-    public function add(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
@@ -36,36 +27,26 @@ class RacesController extends Controller
 
             return back();
         }
-        return abort(404);
-    }
 
-    public function delete(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
+        if ($request->method() == 'DELETE') {
             $race = Race::find($request->input('id'));
+            if ($race->id == 1){
+                \Session::flash('flash_error', 'Активная гонка не может быть удалена');
+
+                return back();
+            }
             $race->delete();
             \Session::flash('flash', 'Гонка ' . $race->name . ' успешно удалена.');
 
             return back();
         }
-        return abort(404);
+
+        return view('Admin.Race.races', ['races' => Race::all()]);
     }
 
-    public function edit($id)
+    public function edit($id, Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-
-            return view('Admin.Race.race_edit', [
-                    'race' => Race::where('id', '=', $id)->first()
-                ]
-            );
-        }
-        return abort(404);
-    }
-
-    public function update(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             $this->validate($request, [
                     'name' => 'required | max:50 | min: 3',
                     'start' => 'required | date',
@@ -79,17 +60,17 @@ class RacesController extends Controller
 
             return redirect('races');
         }
-        return abort(404);
+        return view('Admin.Race.race_edit', [
+                'race' => Race::where('id', '=', $id)->first()
+            ]
+        );
     }
 
     public function race_activate($id)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-            Race::where('is_active', 1)->update(['is_active' => 0]);
-            Race::where('id', $id)->update(['is_active' => 1]);
+        Race::where('is_active', 1)->update(['is_active' => 0]);
+        Race::where('id', $id)->update(['is_active' => 1]);
 
-            return back();
-        }
-        return abort(404);
+        return back();
     }
 }

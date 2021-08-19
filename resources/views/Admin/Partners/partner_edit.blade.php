@@ -37,7 +37,7 @@
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form action="{{route('partner_save_edit')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('partner_edit', $partner->id)}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" value="{{$partner->id}}" name="id">
                         <div class="form-group">
