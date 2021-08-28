@@ -8,58 +8,37 @@ use Illuminate\Support\Facades\Auth;
 
 class SlidersController extends Controller
 {
-    public function sliders()
+    public function sliders(Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-
-            return view('Admin.Sliders.sliders', [
-                    'sliders' => Slider::orderBy('order', 'ASC')->get(),
-                    'max' => Slider::max('order'),
-                ]
-            );
-        }
-        return abort(404);
-    }
-
-    public function deactivate($id)
-    {
-        $data = Slider::find($id);
-        if (Auth::check() && Auth::user()->role >= 1 && !empty($data)) {
-            if ($data->is_active == 1)
-                Slider::where('id', $id)->update(['is_active' => 0]);
-            else {
-                Slider::where('id', $id)->update(['is_active' => 1]);
-            }
-
-            return back();
-        }
-        return abort(404);
-    }
-
-    public function delete(Request $request)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'DELETE') {
-            $slider = Slider::find($request->input('id'));
+        if ($request->method() == 'DELETE') {
+            $slider = Slider::findOrFail($request->input('id'));
             $slider->delete();
             Slider::positions_update();
             \Session::flash('flash', 'Слайдер ' . $slider->title . ' успешно удален.');
 
             return back();
         }
-        return abort(404);
+        return view('Admin.Sliders.sliders', [
+                'sliders' => Slider::orderBy('order', 'ASC')->get(),
+                'max' => Slider::max('order'),
+            ]
+        );
     }
 
-    public function add()
+    public function deactivate($id)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.Sliders.slider_add');
-        }
-        return abort(404);
+        $data = Slider::findOrFail($id);
+        if ($data->is_active == 1)
+            Slider::where('id', $id)->update(['is_active' => 0]);
+        else
+            Slider::where('id', $id)->update(['is_active' => 1]);
+
+        return back();
     }
 
-    public function save(Request $request)
+    public function add(Request $request)
     {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'title' => 'string | required | min: 3 | max:255',
@@ -92,20 +71,14 @@ class SlidersController extends Controller
 
             return redirect()->route('sliders');
         }
-        return abort(404);
+
+        return view('Admin.Sliders.slider_add');
+
     }
 
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-            return view('Admin.Sliders.slider_edit', ['slider' => Slider::find($id)]);
-        }
-        return abort(404);
-    }
-
-    public function update(Request $request, $id)
-    {
-        if (Auth::check() && Auth::user()->role >= 1 && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'title' => 'string | required | min: 3 | max:255',
@@ -114,7 +87,7 @@ class SlidersController extends Controller
                     'big_image' => 'image',
                 ]
             );
-            $slider = Slider::find($id);
+            $slider = Slider::findOrFail($id);
             $slider->title = $request->input('title');
             $slider->text = $request->input('text');
 
@@ -137,28 +110,25 @@ class SlidersController extends Controller
 
             return redirect()->route('sliders');
         }
-        return abort(404);
+
+        return view('Admin.Sliders.slider_edit', ['slider' => Slider::findOrFail($id)]);
     }
 
-    public function up($id){
-        if (Auth::check() && Auth::user()->role >= 1) {
+    public function up($id)
+    {
         $order = Slider::where('id', $id)->value('order');
-        Slider::where('order', $order-1)->update(['order' => $order]);
-        Slider::where('id', $id)->update(['order' => $order-1]);
+        Slider::where('order', $order - 1)->update(['order' => $order]);
+        Slider::where('id', $id)->update(['order' => $order - 1]);
 
-            return back();
-        }
-        return abort(404);
+        return back();
     }
 
-    public function down($id){
-        if (Auth::check() && Auth::user()->role >= 1) {
+    public function down($id)
+    {
         $order = Slider::where('id', $id)->value('order');
-        Slider::where('order', $order+1)->update(['order' => $order]);
-        Slider::where('id', $id)->update(['order' => $order+1]);
+        Slider::where('order', $order + 1)->update(['order' => $order]);
+        Slider::where('id', $id)->update(['order' => $order + 1]);
 
-            return back();
-        }
-        return abort(404);
+        return back();
     }
 }

@@ -31,7 +31,7 @@ class PilotsController extends Controller
         }
 
         if ($request->method() == 'DELETE') {
-            $pilot = Pilot::find($request->input('id'));
+            $pilot = Pilot::findOrFail($request->input('id'));
             $pilot->delete();
             \Session::flash('flash', 'Пилот ' . $pilot->name . ' больше никуда не едет.');
 
@@ -47,7 +47,7 @@ class PilotsController extends Controller
                 'name' => 'required | max:50 | min: 3',
             ]
         );
-        $pilot = Pilot::where('id', '=', $request->input('id'))->first();
+        $pilot = Pilot::where('id', '=', $request->input('id'))->firstOrFail();
         $pilot->name = $request->input('name');
         $pilot->save();
 

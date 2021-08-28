@@ -45,7 +45,7 @@
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form method="post" action="{{route('race_result_save')}}">
+                    <form method="post" action="{{route('race_result')}}">
                         @csrf
                         <input type="hidden" name="race_id" value="{{$race->id}}">
                         <table class="table table-striped">

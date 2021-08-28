@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use App\Http\Middleware\IsAuthMiddleware;
+use App\Http\Middleware\IsAuth;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -60,7 +60,8 @@ class Kernel extends HttpKernel
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'is_auth' => \App\Http\Middleware\IsAuthMiddleware::class,
+        'is_admin' => \App\Http\Middleware\IsAdmin::class,
+        'is_auth' => \App\Http\Middleware\IsAuth::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,

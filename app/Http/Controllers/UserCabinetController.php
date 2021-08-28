@@ -13,31 +13,15 @@ class UserCabinetController extends Controller
     public function user_cabinet()
     {
 
-        if (Auth::check()) {
-
-            return view('Pages.user_cabinet', [
-                    'user' => Auth::user()
-                ]
-            );
-        }
-        return abort(404);
+        return view('Pages.user_cabinet', [
+                'user' => Auth::user()
+            ]
+        );
     }
 
-    public function user_edit()
+    public function user_edit(Request $request)
     {
-        if (Auth::check()) {
-
-            return view('Pages.user_edit', [
-                    'user' => Auth::user()
-                ]
-            );
-        }
-        return abort(404);
-    }
-
-    public function user_save_edit(Request $request)
-    {
-        if (Auth::check() && $request->method() == 'POST') {
+        if ($request->method() == 'POST') {
             $name = Auth::user()->name;
             $valid = Validator::make($request->input(), [
                     'name' => ['required', 'string', 'min:2', 'max:255', Rule::unique('users')->ignore(Auth::user()->id)],
@@ -73,6 +57,10 @@ class UserCabinetController extends Controller
 
             return redirect()->route('user_cabinet');
         }
-        return abort(404);
+
+        return view('Pages.user_edit', [
+                'user' => Auth::user()
+            ]
+        );
     }
 }

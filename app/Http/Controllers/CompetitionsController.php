@@ -11,7 +11,7 @@ class CompetitionsController extends Controller
     public function competitions(Request $request)
     {
         if ($request->method() == 'DELETE') {
-            $competition = Competition::find($request->input('id'));
+            $competition = Competition::findOrFail($request->input('id'));
             $competition->delete();
             \Session::flash('flash', 'Конкурс ' . $competition->name . ' успешно удален.');
 
@@ -30,7 +30,7 @@ class CompetitionsController extends Controller
                     'description' => 'required | min: 5 | max: 2000',
                 ]
             );
-            $competition = Competition::find($request->input('id'));
+            $competition = Competition::findOrFail($request->input('id'));
             $competition->name = $request->input('name');
             $competition->description = $request->input('description');
 
@@ -41,6 +41,6 @@ class CompetitionsController extends Controller
             return redirect()->route('competitions');
         }
 
-        return view('Admin.Competitions.competition_edit', ['competition' => Competition::find($id)]);
+        return view('Admin.Competitions.competition_edit', ['competition' => Competition::findOrFail($id)]);
     }
 }

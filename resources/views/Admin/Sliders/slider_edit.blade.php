@@ -42,7 +42,7 @@
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form action="{{route('slider_edit_save', $slider->id)}}" method="post"
+                    <form action="{{route('slider_edit', $slider->id)}}" method="post"
                           enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">

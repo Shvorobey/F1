@@ -22,90 +22,99 @@ Route::post('/post/add_comment', 'PagesController@add_comment')->name('add_comme
 Route::get('/post/del_comment/{id}', 'PagesController@delete_comment')->name('delete_comment');
 Route::get('/races', 'PagesController@races')->name('races_user');
 Route::get('/single_race/{id}', 'PagesController@single_race')->name('single_race_user');
-Route::get('/user_cabinet', 'UserCabinetController@user_cabinet')->name('user_cabinet');
-Route::get('/user/edit', 'UserCabinetController@user_edit')->name('user_edit');
-Route::post('/user/edit', 'UserCabinetController@user_save_edit')->name('user_save_edit');
+
+// USER CABINET
+Route::middleware(['is_auth'])->group(function () {
+    Route::prefix('user_cabinet')->group(function () {
+        Route::get('/', 'UserCabinetController@user_cabinet')->name('user_cabinet');
+        Route::match(['get', 'post'], '/edit', 'UserCabinetController@user_edit')->name('user_edit');
+    });
+});
 
 //CASINO
 Route::prefix('competition')->group(function () {
     Route::prefix('casino')->group(function () {
-        Route::get('/', 'CasinoController@index')->name('casino')->middleware('is_auth');
-        Route::post('/', 'CasinoController@bet_save')->name('bet_save')->middleware('is_auth');
-        Route::get('/results', 'CasinoController@results')->name('casino_results')->middleware('is_auth');
+        Route::get('/', 'CasinoController@index')->name('casino');
+        Route::post('/', 'CasinoController@bet_save')->name('bet_save');
+        Route::get('/results', 'CasinoController@results')->name('casino_results');
     });
 
-    Route::get('/champions_league', 'ChampionsLeagueController@index')->name('champions_league')->middleware('is_auth');
-    Route::get('/forecaster', 'ForecasterController@index')->name('forecaster')->middleware('is_auth');
+    Route::get('/champions_league', 'ChampionsLeagueController@index')->name('champions_league');
+    Route::get('/forecaster', 'ForecasterController@index')->name('forecaster');
 });
 
 //////////// ADMIN PANEL ////////////
-Route::prefix('F1_AdmiN')->group(function () {
+Route::middleware(['is_admin'])->group(function () {
+
+    Route::prefix('F1_AdmiN')->group(function () {
+
 //PILOTS
-    Route::prefix('pilot')->group(function () {
-        Route::match(['get', 'post' , 'delete'], '/', 'PilotsController@pilots')->name('pilots')->middleware('is_auth');
-        Route::post('/edit', 'PilotsController@edit')->name('pilot_edit')->middleware('is_auth');
-    });
+        Route::prefix('pilot')->group(function () {
+            Route::match(['get', 'post', 'delete'], '/', 'PilotsController@pilots')->name('pilots');
+            Route::post('/edit', 'PilotsController@edit')->name('pilot_edit');
+        });
+
 //SOCIAL NETWORKS
-    Route::prefix('social_networks')->group(function () {
-        Route::match(['get', 'post' , 'delete'], '/', 'SocialNetworksController@social_networks')->name('social_networks')->middleware('is_auth');
-        Route::match(['get', 'post'], '/edit/{id}', 'SocialNetworksController@edit')->name('social_network_edit')->middleware('is_auth');
-    });
+        Route::prefix('social_networks')->group(function () {
+            Route::match(['get', 'post', 'delete'], '/', 'SocialNetworksController@social_networks')->name('social_networks');
+            Route::match(['get', 'post'], '/edit/{id}', 'SocialNetworksController@edit')->name('social_network_edit');
+        });
+
 //BLOG
-    Route::prefix('post')->group(function () {
-        Route::match(['get', 'delete'], '/', 'PostsController@all')->name('posts_all')->middleware('is_auth');
-        Route::match(['get', 'post'], '/add', 'PostsController@add')->name('post_add')->middleware('is_auth');
-        Route::match(['get', 'post'], '/edit/{id}', 'PostsController@edit')->name('post_edit')->middleware('is_auth');
-        Route::match(['get', 'post'], '/post_set/{id}', 'PostsController@post_set')->name('post_set')->middleware('is_auth');
-    });
+        Route::prefix('post')->group(function () {
+            Route::match(['get', 'delete'], '/', 'PostsController@all')->name('posts_all');
+            Route::match(['get', 'post'], '/add', 'PostsController@add')->name('post_add');
+            Route::match(['get', 'post'], '/edit/{id}', 'PostsController@edit')->name('post_edit');
+            Route::match(['get', 'post'], '/post_set/{id}', 'PostsController@post_set')->name('post_set');
+        });
+
 //RACE
-    Route::prefix('race')->group(function () {
-        Route::match(['get', 'post' , 'delete'], '/', 'RacesController@races')->name('races')->middleware('is_auth');
-        Route::match(['get', 'post'], '/edit/{id}', 'RacesController@edit')->name('race_edit')->middleware('is_auth');
-        Route::get('/activate/{id}', 'RacesController@race_activate')->name('race_activate')->middleware('is_auth');
-    });
+        Route::prefix('race')->group(function () {
+            Route::match(['get', 'post', 'delete'], '/', 'RacesController@races')->name('races');
+            Route::match(['get', 'post'], '/edit/{id}', 'RacesController@edit')->name('race_edit');
+            Route::get('/activate/{id}', 'RacesController@race_activate')->name('race_activate');
+        });
+
 //USERS
-    Route::prefix('user')->group(function () {
-        Route::match(['get', 'post' , 'delete'], '/', 'UsersController@users')->name('users')->middleware('is_auth');
-    });
+        Route::prefix('user')->group(function () {
+            Route::match(['get', 'post', 'delete'], '/', 'UsersController@users')->name('users');
+        });
+
 //PARTNERS
-    Route::prefix('partner')->group(function () {
-        Route::match(['get', 'delete'], '/', 'PartnersController@partners')->name('partners')->middleware('is_auth');
-        Route::match(['get', 'post'], '/add', 'PartnersController@add')->name('partners_add')->middleware('is_auth');
-        Route::match(['get', 'post'], '/edit/{id}', 'PartnersController@edit')->name('partner_edit')->middleware('is_auth');
-    });
+        Route::prefix('partner')->group(function () {
+            Route::match(['get', 'delete'], '/', 'PartnersController@partners')->name('partners');
+            Route::match(['get', 'post'], '/add', 'PartnersController@add')->name('partners_add');
+            Route::match(['get', 'post'], '/edit/{id}', 'PartnersController@edit')->name('partner_edit');
+        });
+
 //COMPETITIONS
-    Route::prefix('competitions')->group(function () {
-        Route::match(['get', 'delete'], '/', 'CompetitionsController@competitions')->name('competitions')->middleware('is_auth');
-        Route::match(['get', 'post'], '/edit/{id}', 'CompetitionsController@edit')->name('competition_edit')->middleware('is_auth');
-    });
+        Route::prefix('competitions')->group(function () {
+            Route::match(['get', 'delete'], '/', 'CompetitionsController@competitions')->name('competitions');
+            Route::match(['get', 'post'], '/edit/{id}', 'CompetitionsController@edit')->name('competition_edit');
+        });
+
 // RACE RESULT
-    Route::prefix('race_result')->group(function () {
-        Route::get('/', 'RaceResultController@race_result')->name('race_result');
-        Route::post('/', 'RaceResultController@save')->name('race_result_save');
-        Route::get('/{id}', 'RaceResultController@single')->name('race_result_single');
-        Route::post('/{id}', 'RaceResultController@update')->name('race_result_update');
-    });
+        Route::prefix('race_result')->group(function () {
+            Route::match(['get', 'post'], '/', 'RaceResultController@race_result')->name('race_result');
+            Route::match(['get', 'post'], '/{id}', 'RaceResultController@single')->name('race_result_single');
+        });
+
 //CASINO COUNTING
-    Route::prefix('casino_counting')->group(function () {
-        Route::get('/{id}', 'CasinoController@count')->name('casino_counting');
-    });
+        Route::prefix('casino_counting')->group(function () {
+            Route::get('/{id}', 'CasinoController@count')->name('casino_counting');
+        });
+
 // SLIDERS
-    Route::prefix('sliders')->group(function () {
-        Route::get('/', 'SlidersController@sliders')->name('sliders');
-        Route::get('/deactivate/{id}', 'SlidersController@deactivate')->name('slider_deactivate');
-        Route::delete('/delete', 'SlidersController@delete')->name('slider_delete');
-        Route::get('/add', 'SlidersController@add')->name('slider_add');
-        Route::post('/add', 'SlidersController@save')->name('slider_save');
-        Route::get('/edit/{id}', 'SlidersController@edit')->name('slider_edit');
-        Route::post('/edit/{id}', 'SlidersController@update')->name('slider_edit_save');
-        Route::get('/up/{id}', 'SlidersController@up')->name('slider_up');
-        Route::get('/down/{id}', 'SlidersController@down')->name('slider_down');
+        Route::prefix('sliders')->group(function () {
+            Route::match(['get', 'delete'], '/', 'SlidersController@sliders')->name('sliders');
+            Route::get('/deactivate/{id}', 'SlidersController@deactivate')->name('slider_deactivate');
+            Route::match(['get', 'post'], '/add', 'SlidersController@add')->name('slider_add');
+            Route::match(['get', 'post'], '/edit/{id}', 'SlidersController@edit')->name('slider_edit');
+            Route::get('/up/{id}', 'SlidersController@up')->name('slider_up');
+            Route::get('/down/{id}', 'SlidersController@down')->name('slider_down');
+        });
     });
 });
-
-Route::get('/404', function () {
-    return view('Errors.404');
-})->name('404');
 
 Auth::routes();
 

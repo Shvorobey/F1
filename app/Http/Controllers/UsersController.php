@@ -30,7 +30,7 @@ class UsersController extends Controller
         }
 
         if ($request->method() == 'DELETE') {
-            $user = User::find($request->input('id'));
+            $user = User::findOrFail($request->input('id'));
             if ($user->role != 2) {
                 $user->delete();
                 \Session::flash('flash', 'Пользователь ' . $user->name . ' успешно удален.');

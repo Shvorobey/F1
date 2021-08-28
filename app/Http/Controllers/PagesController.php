@@ -46,7 +46,7 @@ class PagesController extends Controller
 
     public function single_post($id)
     {
-        $post = Post::where('id', '=', $id)->first();
+        $post = Post::where('id', '=', $id)->firstOrFail();
         $post->views += 1;
         $post->save();
 
@@ -79,7 +79,7 @@ class PagesController extends Controller
     public function delete_comment($id)
     {
         if (Auth::check() && Auth::user()->role >= 1) {
-            $comment = Comment::find($id);
+            $comment = Comment::findOrFail($id);
             $comment->delete();
             \Session::flash('flash', 'Коментарий успешно удален.');
             return back();
@@ -89,7 +89,7 @@ class PagesController extends Controller
 
     public function rule($key)
     {
-        $competition = Competition::where('key', '=', $key)->first();
+        $competition = Competition::where('key', '=', $key)->firstOrFail();
         if (!$competition)
             return view('Errors.404');
         $rules = Rule::where('competition_key', '=', $key)->get();
@@ -111,7 +111,7 @@ class PagesController extends Controller
     {
         return view('Pages.single_race', [
                 'results' => RaceResult::where('race_id', '=', $id)->orderBy('place', 'ASC')->get(),
-                'race' => Race::find($id),
+                'race' => Race::findOrFail($id),
             ]
         );
     }

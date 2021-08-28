@@ -31,7 +31,7 @@ class Competition extends Model
         return DB::table('casino_bets')
             ->where('user_id', Auth::user()->id)
             ->where('race_id', $race_id)
-            ->first();
+            ->firstOrFail();
     }
 
     public static function addBet($pilot, $race)

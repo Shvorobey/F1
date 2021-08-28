@@ -50,7 +50,7 @@
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form method="post" action="{{route('race_result_update', $race->id)}}">
+                    <form method="post" action="{{route('race_result_single', $race->id)}}">
                         @csrf
                         <input type="hidden" name="race_id" value="{{$race->id}}">
                         <table class="table table-striped">

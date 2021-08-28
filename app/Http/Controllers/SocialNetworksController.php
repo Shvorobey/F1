@@ -29,7 +29,7 @@ class SocialNetworksController extends Controller
         }
 
         if ($request->method() == 'DELETE') {
-            $social_network = SocialNetwork::find($request->input('id'));
+            $social_network = SocialNetwork::findOrFail($request->input('id'));
             $social_network->delete();
             \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' удалена.');
 
@@ -46,7 +46,7 @@ class SocialNetworksController extends Controller
                     'link' => 'required | url',
                 ]
             );
-            $social_network = SocialNetwork::where('id', '=', $request->input('id'))->first();
+            $social_network = SocialNetwork::where('id', '=', $request->input('id'))->firstOrFail();
             $social_network->name = $request->input('name');
             $social_network->link = $request->input('link');
             $social_network->save();
@@ -57,7 +57,7 @@ class SocialNetworksController extends Controller
         }
         return view('Admin.SocialNetwork.social_network_edit', [
                 'social_network' =>
-                    SocialNetwork::where('id', '=', $id)->first()
+                    SocialNetwork::where('id', '=', $id)->firstOrFail()
             ]
         );
     }

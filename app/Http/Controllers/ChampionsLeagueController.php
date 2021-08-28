@@ -10,7 +10,7 @@ class ChampionsLeagueController extends Controller
 {
     public function index(){
         $pilots = Pilot::all();
-        $name = Competition::where('key', '=', 'champions_league')->first()->name;
+        $name = Competition::where('key', '=', 'champions_league')->firstOrFail()->name;
         return view('Competitions.champions_league', [
             'pilots' => $pilots,
             'name' => $name

@@ -42,7 +42,7 @@
             <div class="row">
                 <!-- START CONTENT -->
                 <div id="content-page" class="span12 content group">
-                    <form action="{{route('slider_save')}}" method="post" enctype="multipart/form-data">
+                    <form action="{{route('slider_add')}}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label style="color: gold">Изображение 150 X 150</label>

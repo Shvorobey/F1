@@ -31,7 +31,7 @@ class CasinoController extends Controller
     {
         $pilots = [];
         $bet_pilot = '';
-        $race = Race::where('is_active', 1)->first();
+        $race = Race::where('is_active', 1)->firstOrFail();
 
         if (Auth::check()) {
             $pil = Pilot::all()->toArray();
@@ -45,11 +45,11 @@ class CasinoController extends Controller
                     $pilots[] = $pilot;
 
             if (!empty($bet = Competition::getCasinoBet($race->id)))
-                $bet_pilot = Pilot::where('id', $bet->pilot_id)->first();
+                $bet_pilot = Pilot::where('id', $bet->pilot_id)->firstOrFail();
         }
         return view('Competitions.casino', [
             'pilots' => $pilots,
-            'competition' => Competition::where('key', '=', 'casino')->first(),
+            'competition' => Competition::where('key', '=', 'casino')->firstOrFail(),
             'race' => $race,
             'bet_pilot' => $bet_pilot,
             'stop_date' => Carbon::parse($race->start)->subMinute(20),
@@ -61,7 +61,7 @@ class CasinoController extends Controller
     public function bet_save(Request $request)
     {
         if ($request->method() == 'POST') {
-            $race = Race::find($request->input('race'));
+            $race = Race::findOrFail($request->input('race'));
             if (Competition::isExpired($race->start, 20)) {
                 \Session::flash('flash', 'Время возможности сделать ставку вышло');
                 return back();
@@ -86,7 +86,7 @@ class CasinoController extends Controller
 
     public function count($id)
     {
-            if (!empty(Casino::where('race_id', '=', $id)->first())) {
+            if (!empty(Casino::where('race_id', '=', $id)->firstOrFail())) {
                 \Session::flash('flash_error', 'Результаты прогнозов этой гонки уже посчитаны.');
                 return back();
             }
@@ -99,7 +99,7 @@ class CasinoController extends Controller
                 $result = RaceResult::where('race_id', '=', $id)
                     ->where('pilot_id', '=', $bet->pilot_id)
                     ->pluck('place')
-                    ->first();
+                    ->firstOrFail();
                 if (!empty($result) && !empty(self::SCORE[$result])) {
                     $score = self::SCORE[$result];
                 }
@@ -129,7 +129,7 @@ class CasinoController extends Controller
         krsort($final_results, SORT_NUMERIC);
 
         return view('Competitions.casino_results', [
-                'casino' => Competition::where('key', '=', 'casino')->first(),
+                'casino' => Competition::where('key', '=', 'casino')->firstOrFail(),
                 'races' => Race::all(),
                 'results' => $final_results,
             ]

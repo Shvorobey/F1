@@ -11,7 +11,7 @@ class PostsController extends Controller
     public function all(Request $request)
     {
         if ($request->method() == 'DELETE') {
-            $post = Post::find($request->input('id'));
+            $post = Post::findOrFail($request->input('id'));
             $post->delete();
             \Session::flash('flash', 'Пост № ' . $post->id . ' успешно удален.');
 
@@ -61,7 +61,7 @@ class PostsController extends Controller
                     'image' => 'image',
                 ]
             );
-            $post = Post::find($request->input('id'));
+            $post = Post::findOrFail($request->input('id'));
             $post->title = $request->input('title');
             $post->body = $request->input('body');
 
@@ -87,7 +87,7 @@ class PostsController extends Controller
             return redirect()->route('single_post', $post->id);
         }
 
-        return view('Admin.Posts.post_edit', ['post' => Post::find($id)]);
+        return view('Admin.Posts.post_edit', ['post' => Post::findOrFail($id)]);
 
     }
 

@@ -29,7 +29,7 @@ class RacesController extends Controller
         }
 
         if ($request->method() == 'DELETE') {
-            $race = Race::find($request->input('id'));
+            $race = Race::findOrFail($request->input('id'));
             if ($race->id == 1){
                 \Session::flash('flash_error', 'Активная гонка не может быть удалена');
 
@@ -52,7 +52,7 @@ class RacesController extends Controller
                     'start' => 'required | date',
                 ]
             );
-            $race = Race::where('id', '=', $request->input('id'))->first();
+            $race = Race::where('id', '=', $request->input('id'))->firstOrFail();
             $race->name = $request->input('name');
             $race->start = $request->input('start');
             $race->save();
@@ -61,7 +61,7 @@ class RacesController extends Controller
             return redirect('races');
         }
         return view('Admin.Race.race_edit', [
-                'race' => Race::where('id', '=', $id)->first()
+                'race' => Race::where('id', '=', $id)->firstOrFail()
             ]
         );
     }

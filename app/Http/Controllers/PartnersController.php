@@ -13,7 +13,7 @@ class PartnersController extends Controller
     public function partners(Request $request)
     {
         if ($request->method() == 'DELETE') {
-            $partner = Partner::find($request->input('id'));
+            $partner = Partner::findOrFail($request->input('id'));
             $partner->delete();
             \Session::flash('flash', 'Партнер ' . $partner->name . ' успешно удален.');
 
@@ -63,7 +63,7 @@ class PartnersController extends Controller
                     'image' => 'image',
                 ]
             );
-            $partner = Partner::find($request->input('id'));
+            $partner = Partner::findOrFail($request->input('id'));
             $partner->name = $request->input('name');
             $partner->link = $request->input('link');
 
@@ -80,7 +80,7 @@ class PartnersController extends Controller
             return redirect()->route('partners');
         }
 
-        return view('Admin.Partners.partner_edit', ['partner' => Partner::find($id)]);
+        return view('Admin.Partners.partner_edit', ['partner' => Partner::findOrFail($id)]);
 
     }
 }

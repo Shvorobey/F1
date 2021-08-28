@@ -102,7 +102,7 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <form action="{{route('slider_delete')}}" method="post">
+                                    <form action="{{route('sliders')}}" method="post">
                                         @csrf
                                         {{method_field('delete')}}
                                         <input type="hidden" name="id" value="{{$slider->id}}">

@@ -10,7 +10,7 @@ class ForecasterController extends Controller
 {
     public function index(){
         $pilots = Pilot::all();
-        $name = Competition::where('key', '=', 'forecaster')->first()->name;
+        $name = Competition::where('key', '=', 'forecaster')->firstOrFail()->name;
         return view('Competitions.forecaster', [
             'pilots' => $pilots,
             'name' => $name
