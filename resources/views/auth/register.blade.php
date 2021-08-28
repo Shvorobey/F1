@@ -3,6 +3,10 @@
 
 @section('title', 'F1 | Odessa')
 
+@section('script')
+    {!! Recaptcha::renderJs('ru') !!}
+@endsection
+
 @section('content')
 
     <!-- END HEADER -->
@@ -26,12 +30,18 @@
     <!-- END PAGE META -->
 
     <!-- START PRIMARY -->
+    @if ($errors->has('g-recaptcha-response'))
+        <div class="box error-box">
+            <p>{{ $errors->first('g-recaptcha-response') }}</p>
+        </div>
+    @endif
     <div id="primary" class="sidebar-right">
         <div class="container group">
             <div class="row">
                 <div id="content-page" class="span12 content group">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
+                        {!! Recaptcha::field('login') !!}
                         <div class="form-group row">
                             <label style="color: gold" for="name" class="col-md-4 col-form-label text-md-right">{{ __('Логин') }}</label>
                             <div class="col-md-6">

@@ -76,6 +76,7 @@
         }
     </style>
     <script type='text/javascript' src='/js/jquery/jquery.js'></script>
+    @yield('script')
 </head>
 
 <!-- END HEAD -->
@@ -269,12 +270,8 @@
                 </div>
             </div>
             <!-- END COPYRIGHT -->
-
-            <div class="wrapper-border"></div>
-
         </div>
         <!-- END WRAPPER -->
-
     </div>
     <!-- END BG SHADOW -->
 

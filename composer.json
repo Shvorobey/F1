@@ -15,6 +15,7 @@
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "2.4",
+        "mostafaznv/recaptcha": "^1.1",
         "tinymce/tinymce": "^5.8",
         "vearutop/php-obscene-censor-rus": "^1.0"
     },
