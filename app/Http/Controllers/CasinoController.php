@@ -31,7 +31,7 @@ class CasinoController extends Controller
     {
         $pilots = [];
         $bet_pilot = '';
-        $race = Race::where('is_active', 1)->firstOrFail();
+        $race = Race::where('is_active', 1)->first();
 
         if (Auth::check()) {
             $pil = Pilot::all()->toArray();
@@ -45,11 +45,11 @@ class CasinoController extends Controller
                     $pilots[] = $pilot;
 
             if (!empty($bet = Competition::getCasinoBet($race->id)))
-                $bet_pilot = Pilot::where('id', $bet->pilot_id)->firstOrFail();
+                $bet_pilot = Pilot::where('id', $bet->pilot_id)->first();
         }
         return view('Competitions.casino', [
             'pilots' => $pilots,
-            'competition' => Competition::where('key', '=', 'casino')->firstOrFail(),
+            'competition' => Competition::where('key', '=', 'casino')->first(),
             'race' => $race,
             'bet_pilot' => $bet_pilot,
             'stop_date' => Carbon::parse($race->start)->subMinute(20),
@@ -86,11 +86,10 @@ class CasinoController extends Controller
 
     public function count($id)
     {
-            if (!empty(Casino::where('race_id', '=', $id)->firstOrFail())) {
+            if (!empty(Casino::where('race_id', '=', $id)->first())) {
                 \Session::flash('flash_error', 'Результаты прогнозов этой гонки уже посчитаны.');
                 return back();
             }
-            $score = 0;
             $bets = DB::table('casino_bets')
                 ->where('race_id', $id)
                 ->get()
@@ -98,17 +97,19 @@ class CasinoController extends Controller
             foreach ($bets as $bet) {
                 $result = RaceResult::where('race_id', '=', $id)
                     ->where('pilot_id', '=', $bet->pilot_id)
-                    ->pluck('place')
-                    ->firstOrFail();
-                if (!empty($result) && !empty(self::SCORE[$result])) {
-                    $score = self::SCORE[$result];
-                }
-                $total_score = 26 - $result + $score;
+                    ->first();
+                if (!empty($result)) {
+                    $score = self::SCORE[$result->place] ?: 0;
+                    $bonus = !empty($result->pole_position) ? 5 : 0;
+                    $bonus += !empty($result->fastest_lap) ? 3 : 0;
+
+                $total_score = 26 - $result->place + $score + $bonus;
                 $casino = new Casino();
                 $casino->user_id = $bet->user_id;
                 $casino->race_id = $id;
                 $casino->score = $total_score;
                 $casino->save();
+            }
             }
             \Session::flash('flash', 'Результаты прогнозов успешно посчитаны.');
 
@@ -129,7 +130,7 @@ class CasinoController extends Controller
         krsort($final_results, SORT_NUMERIC);
 
         return view('Competitions.casino_results', [
-                'casino' => Competition::where('key', '=', 'casino')->firstOrFail(),
+                'casino' => Competition::where('key', '=', 'casino')->first(),
                 'races' => Race::all(),
                 'results' => $final_results,
             ]
