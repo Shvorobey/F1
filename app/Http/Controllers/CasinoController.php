@@ -24,7 +24,7 @@ class CasinoController extends Controller
         7 => 6,
         8 => 4,
         9 => 2,
-        10 => 1
+        10 => 1,
     ];
 
     public function index()

@@ -54,7 +54,7 @@
                     </div>
                     <div class="input-group-prepend">
                         <span class="input-group-text" style="color: gold" id="inputGroup-sizing-default">Старт:</span>
-                        <input type="datetime-local" name="start" min="2021-06-07T00:00" max="2050-06-14T00:00">
+                        <input type="datetime-local" name="start" min="2021-08-07T00:00" max="2050-06-14T00:00">
                     </div>
                 </div>
                 <input type="submit" class="btn btn-warning" value="+ Добавить">

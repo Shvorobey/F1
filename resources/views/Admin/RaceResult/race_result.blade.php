@@ -48,6 +48,20 @@
                     <form method="post" action="{{route('race_result')}}">
                         @csrf
                         <input type="hidden" name="race_id" value="{{$race->id}}">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" style="color: gold" id="inputGroup-sizing-default"><b> Полу-позишн : </b></span>
+                            <select  name = "pole_position">
+                                @foreach($pilots as $pilot)
+                                <option value="{{$pilot->id}}">{{$pilot->name}}</option>
+                                @endforeach
+                            </select>
+                            <span class="input-group-text" style="color: gold" id="inputGroup-sizing-default"><b> Лучший круг : </b></span>
+                            <select  name = "fastest_lap">
+                                @foreach($pilots as $pilot)
+                                    <option value="{{$pilot->id}}">{{$pilot->name}}</option>
+                                @endforeach
+                            </select>
+                </div>
                         <table class="table table-striped">
                             <thead>
                             <tr>

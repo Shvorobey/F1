@@ -18,6 +18,8 @@ class CreateRaceResultsTable extends Migration
             $table->unsignedInteger('race_id');
             $table->unsignedInteger('pilot_id');
             $table->unsignedTinyInteger('place');
+            $table->unsignedTinyInteger('pole_position')->default(0);
+            $table->unsignedTinyInteger('fastest_lap')->default(0);
             $table->timestamps();
         });
     }
