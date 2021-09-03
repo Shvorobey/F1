@@ -46,6 +46,7 @@ class RaceResultController extends Controller
             }
             \Session::flash('flash', 'Результаты гонки обновлены');
 
+
             return redirect()->route('race_result_single', $id);
         }
         return view('Admin.RaceResult.race_result_edit', [

@@ -86,22 +86,22 @@ class CasinoController extends Controller
 
     public function count($id)
     {
-            if (!empty(Casino::where('race_id', '=', $id)->first())) {
-                \Session::flash('flash_error', 'Результаты прогнозов этой гонки уже посчитаны.');
-                return back();
-            }
-            $bets = DB::table('casino_bets')
-                ->where('race_id', $id)
-                ->get()
-                ->toArray();
-            foreach ($bets as $bet) {
-                $result = RaceResult::where('race_id', '=', $id)
-                    ->where('pilot_id', '=', $bet->pilot_id)
-                    ->first();
-                if (!empty($result)) {
-                    $score = self::SCORE[$result->place] ?: 0;
-                    $bonus = !empty($result->pole_position) ? 5 : 0;
-                    $bonus += !empty($result->fastest_lap) ? 3 : 0;
+        if (!empty(Casino::where('race_id', '=', $id)->first())) {
+            \Session::flash('flash_error', 'Результаты прогнозов этой гонки уже посчитаны.');
+            return back();
+        }
+        $bets = DB::table('casino_bets')
+            ->where('race_id', $id)
+            ->get()
+            ->toArray();
+        foreach ($bets as $bet) {
+            $result = RaceResult::where('race_id', '=', $id)
+                ->where('pilot_id', '=', $bet->pilot_id)
+                ->first();
+            if (!empty($result)) {
+                $score = self::SCORE[$result->place] ?: 0;
+                $bonus = !empty($result->pole_position) ? 5 : 0;
+                $bonus += !empty($result->fastest_lap) ? 3 : 0;
 
                 $total_score = 26 - $result->place + $score + $bonus;
                 $casino = new Casino();
@@ -110,10 +110,10 @@ class CasinoController extends Controller
                 $casino->score = $total_score;
                 $casino->save();
             }
-            }
-            \Session::flash('flash', 'Результаты прогнозов успешно посчитаны.');
+        }
+        \Session::flash('flash', 'Результаты прогнозов успешно посчитаны.');
 
-            return redirect()->route('casino_results');
+        return redirect()->route('casino_results');
     }
 
     public function results()

@@ -15,9 +15,7 @@ class PilotsController extends Controller
                     'name' => 'required | max:50 | min: 3',
                 ]
             );
-            $pilot = new Pilot();
-            $pilot->name = $request->input('name');
-            $pilot->save();
+            $pilot = Pilot::create($request->all());
 
             // Post adding logging
 //                $log = new Logger('new');

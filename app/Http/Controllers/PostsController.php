@@ -51,17 +51,16 @@ class PostsController extends Controller
         return view('Admin.Posts.post_add');
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Post $post, Request $request)
     {
         if ($request->method() == 'POST') {
             // Post validation
             $this->validate($request, [
                     'title' => 'string | required | min: 5 | max:255',
-                    'body' => 'required | min: 100 | max: 2500',
+                    'body' => 'required | min: 100',
                     'image' => 'image',
                 ]
             );
-            $post = Post::findOrFail($request->input('id'));
             $post->title = $request->input('title');
             $post->body = $request->input('body');
 
@@ -87,7 +86,7 @@ class PostsController extends Controller
             return redirect()->route('single_post', $post->id);
         }
 
-        return view('Admin.Posts.post_edit', ['post' => Post::findOrFail($id)]);
+        return view('Admin.Posts.post_edit', ['post' => $post]);
 
     }
 

@@ -18,11 +18,7 @@ class SocialNetworksController extends Controller
                     'link' => 'required | url',
                 ]
             );
-            $social_network = new SocialNetwork();
-            $social_network->name = $request->input('name');
-            $social_network->link = $request->input('link');
-            $social_network->save();
-
+            $social_network = SocialNetwork::create($request->all());
             \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' успешно добавлена.');
 
             return back();
@@ -38,7 +34,7 @@ class SocialNetworksController extends Controller
         return view('Admin.SocialNetwork.social_networks', ['social_networks' => SocialNetwork::all()]);
     }
 
-    public function edit($id, Request $request)
+    public function edit(SocialNetwork $socialNetwork, Request $request)
     {
         if ($request->method() == 'POST') {
             $this->validate($request, [
@@ -46,19 +42,14 @@ class SocialNetworksController extends Controller
                     'link' => 'required | url',
                 ]
             );
-            $social_network = SocialNetwork::where('id', '=', $request->input('id'))->firstOrFail();
-            $social_network->name = $request->input('name');
-            $social_network->link = $request->input('link');
-            $social_network->save();
+            $socialNetwork->name = $request->input('name');
+            $socialNetwork->link = $request->input('link');
+            $socialNetwork->save();
 
-            \Session::flash('flash', 'Социальная сеть ' . $social_network->name . ' успешно изменена.');
+            \Session::flash('flash', 'Социальная сеть ' . $socialNetwork->name . ' успешно изменена.');
 
             return redirect()->route('social_networks');
         }
-        return view('Admin.SocialNetwork.social_network_edit', [
-                'social_network' =>
-                    SocialNetwork::where('id', '=', $id)->firstOrFail()
-            ]
-        );
+        return view('Admin.SocialNetwork.social_network_edit', ['social_network' => $socialNetwork]);
     }
 }

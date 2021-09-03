@@ -18,10 +18,7 @@ class RacesController extends Controller
                     'start' => 'required | date',
                 ]
             );
-            $race = new Race();
-            $race->name = $request->input('name');
-            $race->start = $request->input('start');
-            $race->save();
+            $race = Race::create($request->all());
 
             \Session::flash('flash', 'Гонка ' . $race->name . ' успешно добавлена.');
 
@@ -44,7 +41,7 @@ class RacesController extends Controller
         return view('Admin.Race.races', ['races' => Race::all()]);
     }
 
-    public function edit($id, Request $request)
+    public function edit(Race $race, Request $request)
     {
         if ($request->method() == 'POST') {
             $this->validate($request, [
@@ -52,7 +49,6 @@ class RacesController extends Controller
                     'start' => 'required | date',
                 ]
             );
-            $race = Race::where('id', '=', $request->input('id'))->firstOrFail();
             $race->name = $request->input('name');
             $race->start = $request->input('start');
             $race->save();
@@ -60,10 +56,7 @@ class RacesController extends Controller
 
             return redirect('races');
         }
-        return view('Admin.Race.race_edit', [
-                'race' => Race::where('id', '=', $id)->firstOrFail()
-            ]
-        );
+        return view('Admin.Race.race_edit', ['race' => $race,]);
     }
 
     public function race_activate($id)
