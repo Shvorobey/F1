@@ -31,6 +31,6 @@ class CheckRole
             return $next($request);
         }
 
-        return abort(404);
+        return abort(403);
     }
 }
