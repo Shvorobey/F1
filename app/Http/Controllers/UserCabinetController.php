@@ -12,7 +12,6 @@ class UserCabinetController extends Controller
 {
     public function user_cabinet()
     {
-
         return view('Pages.user_cabinet', [
                 'user' => Auth::user()
             ]

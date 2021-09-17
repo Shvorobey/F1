@@ -11,7 +11,6 @@ use App\RaceResult;
 use App\Rule;
 use App\Slider;
 use App\SocialNetwork;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Wkhooy\ObsceneCensorRus;
@@ -60,9 +59,10 @@ class PagesController extends Controller
 
     public function add_comment(Request $request)
     {
-        if (Auth::check() && $request->method() == 'POST') {
+        if ($request->method() == 'POST' && empty($request->input('email'))) {
+
             $this->validate($request, [
-                    'comment' => 'required | max:1000 | min: 2',
+                    'comment' => 'required | string | max:1000 | min: 2',
                 ]
             );
             $comment = new Comment();
@@ -73,29 +73,22 @@ class PagesController extends Controller
 
             return back();
         }
-        return abort(404);
+        return abort(403);
     }
 
     public function delete_comment($id)
     {
-        if (Auth::check() && Auth::user()->role >= 1) {
-            $comment = Comment::findOrFail($id);
-            $comment->delete();
-            \Session::flash('flash', 'Коментарий успешно удален.');
-            return back();
-        }
-        return abort(404);
+        Comment::findOrFail($id)->delete();
+        \Session::flash('flash', 'Коментарий успешно удален.');
+
+        return back();
     }
 
     public function rule($key)
     {
-        $competition = Competition::where('key', '=', $key)->firstOrFail();
-        if (!$competition)
-            return view('Errors.404');
-        $rules = Rule::where('competition_key', '=', $key)->get();
         return view('Pages.rule', [
-                'competition' => $competition,
-                'rules' => $rules,
+                'competition' => Competition::where('key', '=', $key)->firstOrFail(),
+                'rules' => Rule::where('competition_key', '=', $key)->get(),
             ]
         );
     }
