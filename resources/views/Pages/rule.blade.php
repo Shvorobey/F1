@@ -1,5 +1,11 @@
 @extends('Layouts.layout')
+
 @section('title', 'F1 | Odessa')
+
+@section('meta_keywords', 'F1, Odessa, formula 1, rules, формула 1, клуб, Одесса, правила')
+
+@section('meta_description', 'Правила соревнований, Competition rules')
+
 @section('content')
         </div>
         <!-- END HEADER -->
@@ -47,18 +53,12 @@
                                     </div>
                                 @endforeach
                             </div>
-
                             <script>
                                 jQuery(document).ready(function ($){
                                     $('#faqs-container').yit_faq();
                                 })
                             </script>
-
                         </div>
-                        <!-- START COMMENTS -->
-                        <div id="comments">
-                        </div>
-                        <!-- END COMMENTS -->
                     </div>
                     <!-- END CONTENT -->
 
@@ -66,17 +66,10 @@
                     <div id="sidebar-homeiv" class="span3 sidebar group">
                         <div class="widget-first widget widget-icon-text group">
                             <img class="imgicon" src="/images/emotion_smile.png" alt=""/>
-
-                            <h3>Выигрывает только тот</h3>
-
-                            <p>кто участвует.</p>
-
+                            <h3>Выигрывает только тот</h3> <p>кто участвует.</p>
                         </div>
                     </div>
                     <!-- END SIDEBAR -->
-
-                    <!-- START EXTRA CONTENT -->
-                    <!-- END EXTRA CONTENT -->
                 </div>
             </div>
         </div>

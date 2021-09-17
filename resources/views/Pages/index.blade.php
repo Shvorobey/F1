@@ -2,6 +2,10 @@
 
 @section('title', 'F1 | Odessa')
 
+@section('meta_keywords', 'F1, Odessa, formula 1, club, формула 1, Ф1, клуб, Одесса')
+
+@section('meta_description', 'Odessa Formula 1 Club, Одесский Клуб формулы 1')
+
 @section('content')
 
     <!-- BEGIN FLEXSLIDER SLIDER -->
@@ -89,7 +93,6 @@
                                                         </p>
                                                     </div>
                                                 </div>
-
                                                 <div class="the-content span6">
                                                     <h4>
                                                         <a href="{{route('single_post', $post->id)}}"
@@ -125,8 +128,7 @@
                                             <li style="height: 70px;">
                                                 <a href="{{$partner->link}}" class="bwWrapper" target="_blank">
                                                     <img src="images/slider/{{$partner->image}}"
-                                                         style="max-height: 70px;"
-                                                         class="logo"/>
+                                                         style="max-height: 70px;"class="logo"/>
                                                 </a>
                                             </li>
                                         @endforeach
@@ -134,8 +136,8 @@
                                 </div>
                                 <div class="clear"></div>
                                 <div class="nav">
-                                    <a class="prev" href="#"></a>
-                                    <a class="next" href="#"></a>
+                                    <a class="prev" href="#">l;t78fd6yy76uioty0u8i</a>
+                                    <a class="next" href="#">kbrydfpijkibn ./n</a>
                                 </div>
                                 <div class="clear"></div>
                             </div>

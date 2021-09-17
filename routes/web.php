@@ -18,8 +18,8 @@ Route::get('/', 'PagesController@index')->name('index');
 Route::get('/rules/{key}', 'PagesController@rule')->name('rule');
 Route::get('/posts', 'PagesController@posts')->name('posts');
 Route::get('/post/{id}', 'PagesController@single_post')->name('single_post');
-Route::post('/post/add_comment', 'PagesController@add_comment')->name('add_comment');
-Route::get('/post/del_comment/{id}', 'PagesController@delete_comment')->name('delete_comment');
+Route::post('/post/add_comment', 'PagesController@add_comment')->middleware('check_role:auth')->name('add_comment');
+Route::get('/post/del_comment/{id}', 'PagesController@delete_comment')->middleware('check_role:admin')->name('delete_comment');
 Route::get('/races', 'PagesController@races')->name('races_user');
 Route::get('/single_race/{id}', 'PagesController@single_race')->name('single_race_user');
 

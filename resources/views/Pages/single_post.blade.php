@@ -2,6 +2,10 @@
 
 @section('title', 'F1 | Odessa')
 
+@section('meta_keywords', 'F1, Odessa, formula 1, news, формула 1, Ф1, Одесса, новость')
+
+@section('meta_description', $post->title)
+
 @section('content')
 </div>
 </div>
@@ -25,7 +29,6 @@
                             <span class="month">{{date('M', strtotime($post->created_at))}}</span>
                             <span class="day">{{date('d', strtotime($post->created_at))}}</span>
                         </p>
-
                         <p class="comments">
                             <span>
                                         <img src="/images/my/eye.jpg" width="10" height="5" alt="Просмотры">
@@ -35,7 +38,6 @@
                     </div>
                     <div class="thumbnail span8">
                         <!-- post title -->
-
                         <img width="760" height="290" src="/images/blog/{{$post->image}}"
                              class="attachment-blog_libra_big wp-post-image"/>
                         <!-- post meta -->
@@ -51,7 +53,6 @@
                         </p>
                     </div>
                 </div>
-
                 <div id="comments">
                     <div id="respond">
 
@@ -81,6 +82,7 @@
                             <form action="{{route('add_comment')}}" method="post">
                                 @csrf
                                 <input type="hidden" name="post_id" value="{{$post->id}}">
+                                <input type="hidden" name="email" value="">
                                 <textarea class="span9 form-control overflow:hidden;" name="comment"></textarea>
                                 <br>
                                 <button class="btn btn-outline-primary">Добавить комментарий</button>
@@ -92,15 +94,12 @@
                             </p>
                     @endif
                     <!-- START COMMENTS -->
-
                     </div>
                     <!-- #respond -->
                 </div>
                 <!-- END COMMENTS -->
-
             </div>
             <!-- END CONTENT -->
-
             <!-- START SIDEBAR -->
             <div id="sidebar-blog-sidebar" class="span3 sidebar group">
                 <div class="widget-first widget recent-posts">

@@ -2,6 +2,10 @@
 
 @section('title', 'F1 | Odessa')
 
+@section('meta_keywords', 'F1, Odessa, formula 1, races, формула 1, клуб, Одесса, гонка')
+
+@section('meta_description', 'Гонка формула 1, Formula 1 race')
+
 @section('content')
     <!-- END HEADER -->
     <!-- START PAGE META -->
@@ -65,8 +69,6 @@
                     </table>
                 </div>
                 <!-- END CONTENT -->
-                <!-- START EXTRA CONTENT -->
-                <!-- END EXTRA CONTENT -->
             </div>
         </div>
     </div>

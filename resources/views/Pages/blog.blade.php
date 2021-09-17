@@ -1,7 +1,9 @@
 
 @extends('Layouts.layout')
 
-@section('title', 'F1 | Odessa')
+@section('meta_keywords', 'F1, Odessa, formula 1, news, формула 1, Ф1, Одесса, новости')
+
+@section('meta_description', 'Новости формулы 1, Formula 1 news')
 
 @section('content')
 
