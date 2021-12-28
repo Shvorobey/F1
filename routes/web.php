@@ -115,7 +115,12 @@ Route::group([
         Route::get('/up/{id}', 'SlidersController@up')->name('slider_up');
         Route::get('/down/{id}', 'SlidersController@down')->name('slider_down');
     });
-});
+
+// RULES
+    Route::prefix('rule')->group(function () {
+        Route::match(['get', 'post', 'delete'], '/', 'RulesController@rules')->name('rules_all');
+        Route::post('/edit', 'RulesController@edit')->name('pilot_edit');
+    });});
 
 Auth::routes();
 

@@ -114,8 +114,14 @@
                                         <li><a href="{{route('races')}}">Гонки</a></li>
                                         <li><a href="{{route('users')}}">Пользователи</a></li>
                                         <li><a href="{{route('partners')}}">Партнеры</a></li>
-                                        <li><a href="{{route('competitions')}}">Конкурсы</a></li>
                                         <li><a href="{{route('sliders')}}">Слайды</a></li>
+                                        <li>
+                                            <a href="#">Конкурсы</a>
+                                            <ul class="sub-menu">
+                                                <li><a href="{{route('competitions')}}">Конкурсы</a></li>
+                                                <li><a href="{{route('rules_all')}}">Правила</a></li>
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </li>
                             @endif
